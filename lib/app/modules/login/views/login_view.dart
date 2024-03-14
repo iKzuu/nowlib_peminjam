@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:nowlib_peminjam/app/modules/home/views/home_view.dart';
+import 'package:nowlib_peminjam/themes.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../register/views/register_view.dart';
@@ -55,6 +56,7 @@ class LoginView extends GetView<LoginController> {
                                 filled: true,
                                 fillColor: Colors.transparent,
                                 labelText: 'Username',
+                                labelStyle: regularFont3,
                                 prefixIcon: const Icon(Icons.person),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20.0),
@@ -75,6 +77,7 @@ class LoginView extends GetView<LoginController> {
                                 filled: true,
                                 fillColor: Colors.transparent,
                                 labelText: 'Password',
+                                labelStyle: regularFont3,
                                 prefixIcon: Icon(Icons.lock),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
@@ -85,7 +88,7 @@ class LoginView extends GetView<LoginController> {
                             ),
                           ),
 
-                          const SizedBox(height: 35.0),
+                          const SizedBox(height: 20.0),
 
                           Obx(() => controller.loading.value?
                           CircularProgressIndicator():
@@ -117,7 +120,8 @@ class LoginView extends GetView<LoginController> {
               onPressed: () => Get.toNamed(Routes.REGISTER),// Gunakan Get.to untuk navigasi menggunakan GetX
               child: const Text(
                 'Daftar',
-                style: TextStyle(
+                style:
+                TextStyle(
                   color: Colors.white,
                 ),
               ),

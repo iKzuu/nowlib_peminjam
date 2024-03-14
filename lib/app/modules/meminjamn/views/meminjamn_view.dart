@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:nowlib_peminjam/themes.dart';
 
 import '../controllers/meminjamn_controller.dart';
 
@@ -10,8 +11,13 @@ class MeminjamnView extends GetView<MeminjamnController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MeminjamnView'),
+        title: Text(
+          'Halaman Peminjaman',
+          style: regularFont,
+        ),
         centerTitle: true,
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
       ),
       body: Center(
           child: Form(

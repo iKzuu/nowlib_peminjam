@@ -68,7 +68,7 @@ class MeminjamnController extends GetxController {
             });
         if (response.statusCode == 201) {
           Get.snackbar("Selamat", "Berhasil meminjam", backgroundColor: Colors.green);
-          Get.offAllNamed(Routes.HOME);
+          Get.offAllNamed(Routes.DASHBOARD);
         } else {
           Get.snackbar("Sorry", "Gagal meminjam", backgroundColor: Colors.orange);
         }

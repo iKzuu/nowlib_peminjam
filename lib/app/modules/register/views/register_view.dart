@@ -25,7 +25,7 @@ class RegisterView extends GetView<RegisterController> {
             const SizedBox(height: 30.0),
             Container(
               width: 350.0,
-              height: 420.0,
+              height: 460.0,
               decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   color: Colors.white,

@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:get/get.dart';
 
 import '../../../data/constant/endpoint.dart';
@@ -36,8 +36,8 @@ class PeminjamanController extends GetxController with StateMixin<List<DataPinja
     change(null, status: RxStatus.loading());
     try {
       final response = await ApiProvider.instance()
-          .get("${Endpoint.pinjam}/${StorageProvider.read(StorageKey.idUser)}");
-      if (response.statusCode == 200) { // Change status code to 200
+          .get("${Endpoint.pinjam}/?userId=${StorageProvider.read(StorageKey.idUser)}");
+      if (response.statusCode == 201) { // Change status code to 200
         final ResponsePinjam responsePinjam =
         ResponsePinjam.fromJson(response.data);
         if (responsePinjam.data!.isEmpty) {
@@ -48,7 +48,7 @@ class PeminjamanController extends GetxController with StateMixin<List<DataPinja
       } else {
         change(null, status: RxStatus.error("${response.data['message']}"));
       }
-    } on DioError catch (e) { // Change to DioError
+    } on dio.DioError catch (e) { // Change to DioError
       if (e.response != null) {
         if (e.response?.data != null) {
           change(null, status: RxStatus.error("${e.response?.data['message']}"));

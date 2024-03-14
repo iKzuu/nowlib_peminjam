@@ -34,7 +34,7 @@ class DetailBukuController extends GetxController {
 
   void fetchData() async {
     var response = await ApiProvider.instance().get(Endpoint.buku);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       var jsonResponse = jsonDecode(response.data);
       var responseData = ResponseBuku.fromJson(jsonResponse);
       listDataBuku = responseData.data ?? [];

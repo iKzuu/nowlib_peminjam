@@ -1,5 +1,5 @@
 /// message : "Peminjaman found successfully"
-/// data : [{"PinjamID":6,"UserID":7,"BookID":19,"TglPeminjaman":"2024-03-01T00:00:00.000Z","TglPengembalian":"2024-03-06T00:00:00.000Z","Status":"dipinjam","Buku":{"BookID":19,"Judul":"Kokoro","Tahunterbit":"2024","Penulis":"Anang San","Jumlahhlmn":250,"Penerbit":"KZU Corp.","Deskripsi":" ","Gambar":null}},{"PinjamID":7,"UserID":7,"BookID":11,"TglPeminjaman":"2024-03-10T00:00:00.000Z","TglPengembalian":"2024-03-15T00:00:00.000Z","Status":"dipinjam","Buku":{"BookID":11,"Judul":"Kimetsu no Yaiba","Tahunterbit":"2016","Penulis":"Koyoharu Gotōge","Jumlahhlmn":23,"Penerbit":"Shueisha","Deskripsi":" ","Gambar":"https://upload.wikimedia.org/wikipedia/id/0/09/Demon_Slayer_-_Kimetsu_no_Yaiba%2C_volume_1.jpg"}},{"PinjamID":8,"UserID":7,"BookID":1,"TglPeminjaman":"2024-03-10T00:00:00.000Z","TglPengembalian":"2024-03-20T00:00:00.000Z","Status":"dipinjam","Buku":{"BookID":1,"Judul":"Pengembara Hitam","Tahunterbit":"2000","Penulis":"Mas Fuad","Jumlahhlmn":120,"Penerbit":"Ngawi SMP","Deskripsi":" ","Gambar":null}}]
+/// data : [{"PinjamID":6,"UserID":7,"BookID":19,"TglPeminjaman":"2024-03-01T00:00:00.000Z","TglPengembalian":"2024-03-06T00:00:00.000Z","Status":"dipinjam","Buku":{"BookID":19,"Judul":"Kokoro","Tahunterbit":"2024","Penulis":"Anang San","Jumlahhlmn":250,"Penerbit":"KZU Corp.","Deskripsi":" ","Gambar":null},"User":{"UserID":7,"Namalengkap":"Ega Naww","Alamat":"Sumber","Email":"eganw@email.com","Username":"Ega","Role":"pengguna"}},{"PinjamID":7,"UserID":7,"BookID":11,"TglPeminjaman":"2024-03-10T00:00:00.000Z","TglPengembalian":"2024-03-15T00:00:00.000Z","Status":"dipinjam","Buku":{"BookID":11,"Judul":"Kimetsu no Yaiba","Tahunterbit":"2016","Penulis":"Koyoharu Gotōge","Jumlahhlmn":23,"Penerbit":"Shueisha","Deskripsi":" ","Gambar":"https://upload.wikimedia.org/wikipedia/id/0/09/Demon_Slayer_-_Kimetsu_no_Yaiba%2C_volume_1.jpg"},"User":{"UserID":7,"Namalengkap":"Ega Naww","Alamat":"Sumber","Email":"eganw@email.com","Username":"Ega","Role":"pengguna"}},{"PinjamID":8,"UserID":7,"BookID":1,"TglPeminjaman":"2024-03-10T00:00:00.000Z","TglPengembalian":"2024-03-20T00:00:00.000Z","Status":"dipinjam","Buku":{"BookID":1,"Judul":"Pengembara Hitam","Tahunterbit":"2000","Penulis":"Mas Fuad","Jumlahhlmn":120,"Penerbit":"Ngawi SMP","Deskripsi":" ","Gambar":null},"User":{"UserID":7,"Namalengkap":"Ega Naww","Alamat":"Sumber","Email":"eganw@email.com","Username":"Ega","Role":"pengguna"}}]
 
 class ResponsePinjam {
   ResponsePinjam({
@@ -36,6 +36,7 @@ class ResponsePinjam {
 /// TglPengembalian : "2024-03-06T00:00:00.000Z"
 /// Status : "dipinjam"
 /// Buku : {"BookID":19,"Judul":"Kokoro","Tahunterbit":"2024","Penulis":"Anang San","Jumlahhlmn":250,"Penerbit":"KZU Corp.","Deskripsi":" ","Gambar":null}
+/// User : {"UserID":7,"Namalengkap":"Ega Naww","Alamat":"Sumber","Email":"eganw@email.com","Username":"Ega","Role":"pengguna"}
 
 class DataPinjam {
   DataPinjam({
@@ -45,7 +46,8 @@ class DataPinjam {
       this.tglPeminjaman, 
       this.tglPengembalian, 
       this.status, 
-      this.buku,});
+      this.buku, 
+      this.user,});
 
   DataPinjam.fromJson(dynamic json) {
     pinjamID = json['PinjamID'];
@@ -55,6 +57,7 @@ class DataPinjam {
     tglPengembalian = json['TglPengembalian'];
     status = json['Status'];
     buku = json['Buku'] != null ? Buku.fromJson(json['Buku']) : null;
+    user = json['User'] != null ? User.fromJson(json['User']) : null;
   }
   int? pinjamID;
   int? userID;
@@ -63,6 +66,7 @@ class DataPinjam {
   String? tglPengembalian;
   String? status;
   Buku? buku;
+  User? user;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -75,6 +79,53 @@ class DataPinjam {
     if (buku != null) {
       map['Buku'] = buku?.toJson();
     }
+    if (user != null) {
+      map['User'] = user?.toJson();
+    }
+    return map;
+  }
+
+}
+
+/// UserID : 7
+/// Namalengkap : "Ega Naww"
+/// Alamat : "Sumber"
+/// Email : "eganw@email.com"
+/// Username : "Ega"
+/// Role : "pengguna"
+
+class User {
+  User({
+      this.userID, 
+      this.namalengkap, 
+      this.alamat, 
+      this.email, 
+      this.username, 
+      this.role,});
+
+  User.fromJson(dynamic json) {
+    userID = json['UserID'];
+    namalengkap = json['Namalengkap'];
+    alamat = json['Alamat'];
+    email = json['Email'];
+    username = json['Username'];
+    role = json['Role'];
+  }
+  int? userID;
+  String? namalengkap;
+  String? alamat;
+  String? email;
+  String? username;
+  String? role;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['UserID'] = userID;
+    map['Namalengkap'] = namalengkap;
+    map['Alamat'] = alamat;
+    map['Email'] = email;
+    map['Username'] = username;
+    map['Role'] = role;
     return map;
   }
 
