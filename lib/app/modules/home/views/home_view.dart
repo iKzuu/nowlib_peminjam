@@ -1,4 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 import 'package:nowlib_peminjam/themes.dart';
@@ -10,183 +15,252 @@ class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: SafeArea(
-          child: Scaffold(
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 30),
-                    child: TextField(
-                      onChanged: (value) {
-                        controller.search(value); // Memanggil fungsi pencarian saat teks berubah
-                      },
-                      decoration: InputDecoration(
-                        hintText: "Cari buku....",
-                        hintStyle: regularFont3.copyWith(color: Colors.grey),
-                        fillColor: Colors.black12,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        suffixIcon: InkWell(
-                          onTap: () {
-                            controller.search(controller.searchController.text); // Memanggil fungsi pencarian saat tombol pencarian ditekan
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            margin: EdgeInsets.symmetric(horizontal: 6),
-                            decoration: BoxDecoration(
-                              color: Colors.lightBlue,
-                              borderRadius: BorderRadius.all(Radius.circular(12)),
-                            ),
-                            child: Icon(
-                              Icons.search_rounded,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        toolbarHeight: 90,
+        actions: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.only(top: 15, bottom: 15),
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              child: TextField(
+                onChanged: (value) {
+                  controller.search(value); // Memanggil fungsi pencarian saat teks berubah
+                },
+                decoration: InputDecoration(
+                  hintText: "Cari buku....",
+                  hintStyle: regularFont3.copyWith(color: Colors.grey),
+                  fillColor: Colors.white,
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
+                  suffixIcon: InkWell(
+                    onTap: () {
+                      controller.search(controller.searchController.text); // Memanggil fungsi pencarian saat tombol pencarian ditekan
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      margin: EdgeInsets.symmetric(horizontal: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.lightBlue,
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      child: Icon(
+                        Icons.search_rounded,
+                        color: Colors.white,
                       ),
                     ),
                   ),
-
-                  SizedBox(height: 20),
-
-                  Container(
-                    height: 200,
-                    width: 350,
-                    decoration: BoxDecoration(
-                      // color: Colors.grey,
-                      image: DecorationImage(
-                        image: AssetImage('assets/giff/bgktg.gif'),
-                        fit: BoxFit.cover, // Sesuaikan dengan ukuran Container
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20.0),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 20),
-
-                  Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 20),
-                        child: Text(
-                            "Untuk Anda",
-                            style: regularFont,
-                        ),
-                      )
-                    ],
-                  ),
-                  Container(
-                    height: 240,
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: controller.obx((state) => ListView.builder(
-                            itemCount: state?.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  Get.toNamed(Routes.DETAIL_BUKU,
-                                      parameters: {
-                                        'id': state[index].bookID.toString()
-                                      });
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.only(right: 10),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        width: 100,
-                                        height: 150,
-                                        decoration: BoxDecoration(
-                                          image: state![index].gambar != null
-                                              ? DecorationImage(
-                                            image: NetworkImage(state![index].gambar!),
-                                            fit: BoxFit.cover,
-                                          ) : null,
-                                        ),
-                                      ),
-                                      Text(
-                                        state![index].judul ?? '',
-                                        style: TextStyle(
-                                            fontSize: 12, color: Colors.black),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }))),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 20),
-                        child: Text(
-                            "Semua",
-                            style: regularFont,
-                        ),
-                      )
-                    ],
-                  ),
-                  Container(
-                    height: 240,
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: controller.obx((state) => ListView.builder(
-                            itemCount: state?.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  Get.toNamed(Routes.DETAIL_BUKU,
-                                      parameters: {
-                                        'id': state[index].bookID.toString()
-                                      });
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.only(right: 10),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        width: 100,
-                                        height: 150,
-                                        decoration: BoxDecoration(
-                                          image: state![index].gambar != null
-                                              ? DecorationImage(
-                                            image: NetworkImage(state![index].gambar!),
-                                            fit: BoxFit.cover,
-                                          ) : null,
-                                          borderRadius: BorderRadius.circular(20),
-                                          border: Border(
-
-                                          ),
-                                        ),
-                                      ),
-                                      Text(
-                                        state![index].judul ?? '',
-                                        style: TextStyle(
-                                            fontSize: 12, color: Colors.black),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }))),
-                  ),
-                ],
+                ),
               ),
             ),
-          )),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+
+            SizedBox(height: 10),
+
+            Container(
+              height: 250,
+              width: 400,
+              decoration: BoxDecoration(
+                color: Colors.blue, // Warna latar belakang sementara gambar tidak ada
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5.0),
+                ),
+              ),
+              child: CarouselSlider(
+                items: [
+                  Image.asset(
+                    'assets/image/ramadhankareem.jpg',
+                    fit: BoxFit.fitWidth,
+                    width: 380,
+                  ),
+                  Image.asset(
+                    'assets/giff/bgktg.gif',
+                    fit: BoxFit.fitWidth,
+                    width: 380,
+                  ),
+                  Image.asset(
+                    'assets/image/kareem.jpg',
+                    fit: BoxFit.fitWidth,
+                    width: 380,
+                  ),
+                  // Tambahkan gambar-gambar GIF lainnya di sini
+                ],
+                options: CarouselOptions(
+                  autoPlay: true, // Untuk mengaktifkan otomatis berputar
+                  aspectRatio: 16 / 9, // Sesuaikan dengan rasio gambar Anda
+                  viewportFraction: 1, // Menampilkan satu gambar per tampilan
+                  enlargeCenterPage: true, // Memperbesar gambar yang sedang ditampilkan
+                ),
+              ),
+            ),
+
+            // Container(
+            //   height: 200,
+            //   width: 350,
+            //   decoration: BoxDecoration(
+            //     // color: Colors.grey,
+            //     image: DecorationImage(
+            //       image: AssetImage('assets/giff/bgktg.gif'),
+            //       fit: BoxFit.cover, // Sesuaikan dengan ukuran Container
+            //     ),
+            //     borderRadius: BorderRadius.all(
+            //       Radius.circular(20.0),
+            //     ),
+            //   ),
+            // ),
+
+            SizedBox(height: 20),
+
+            Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(left: 20),
+                  child: Text(
+                      "Untuk Anda",
+                      style: regularFont,
+                  ),
+                )
+              ],
+            ),
+
+            Container(
+              height: 240,
+              child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: controller.obx((state) => ListView.builder(
+                      itemCount: state?.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Get.toNamed(Routes.MEMINJAMN,
+                                parameters: {
+                                  'id': state[index].bookID.toString()
+                                }
+                                );
+                          },
+                          child: Container(
+                            width: 125,
+                            height: 100,
+                            margin: const EdgeInsets.only(right: 10),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 100,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                    image: state![index].gambar != null
+                                        ? DecorationImage(
+                                      image: NetworkImage(state![index].gambar!),
+                                      fit: BoxFit.cover,
+                                    ) : null,
+                                  ),
+                                  child: Center(
+                                    child: state![index].gambar == null
+                                        ? Text('No Image',
+                                      style: regularFont3,
+                                    ) : null,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Flexible(
+                                  child: AutoSizeText(
+                                    state![index].judul ?? '',
+                                    style: regularFont2.copyWith(color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }))),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(left: 20),
+                  child: Text(
+                      "Semua",
+                      style: regularFont,
+                  ),
+                )
+              ],
+            ),
+            Container(
+              height: 240,
+              child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: controller.obx((state) => ListView.builder(
+                      itemCount: state?.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Get.toNamed(Routes.MEMINJAMN,
+                                parameters: {
+                                  'id': state[index].bookID.toString()
+                                }
+                                );
+                          },
+                          child: Container(
+                            width: 125,
+                            height: 100,
+                            margin: const EdgeInsets.only(right: 10),
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(top: 10),
+                                  width: 100,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                    image: state![index].gambar != null
+                                        ? DecorationImage(
+                                      image: NetworkImage(state![index].gambar!),
+                                      fit: BoxFit.cover,
+                                    ) : null,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Center(
+                                    child: state![index].gambar == null
+                                        ? Text('No Image',
+                                        style: regularFont3,
+                                    ) : null,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Flexible(
+                                  child: AutoSizeText(
+                                      state![index].judul ?? '',
+                                      style: regularFont2.copyWith(color: Colors.black),
+                                      textAlign: TextAlign.center,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }))),
+            ),
+          ],
+        ),
+      ),
     );
 
   }

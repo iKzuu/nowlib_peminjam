@@ -3,10 +3,11 @@ import 'package:get/get.dart';
 
 import '../../../data/constant/endpoint.dart';
 import '../../../data/model/response_pinjam.dart';
+import '../../../data/model/response_riwayat.dart';
 import '../../../data/provider/api_provider.dart';
 import '../../../data/provider/storage_provider.dart';
 
-class PeminjamanController extends GetxController with StateMixin<List<DataPinjam>>{
+class PeminjamanController extends GetxController with StateMixin<List<DataRiwayat>>{
   // int selectedIndex = 2;
 
   final count = 0.obs;
@@ -38,12 +39,12 @@ class PeminjamanController extends GetxController with StateMixin<List<DataPinja
       final response = await ApiProvider.instance()
           .get("${Endpoint.pinjam}/?userId=${StorageProvider.read(StorageKey.idUser)}");
       if (response.statusCode == 201) { // Change status code to 200
-        final ResponsePinjam responsePinjam =
-        ResponsePinjam.fromJson(response.data);
-        if (responsePinjam.data!.isEmpty) {
+        final ResponseRiwayat responseRiwayat =
+        ResponseRiwayat.fromJson(response.data);
+        if (responseRiwayat.data!.isEmpty) {
           change(null, status: RxStatus.empty());
         } else {
-          change(responsePinjam.data, status: RxStatus.success());
+          change(responseRiwayat.data, status: RxStatus.success());
         }
       } else {
         change(null, status: RxStatus.error("${response.data['message']}"));
@@ -67,11 +68,11 @@ class PeminjamanController extends GetxController with StateMixin<List<DataPinja
   //   try {
   //     final response = await ApiProvider.instance().get("${Endpoint.pinjam}/${StorageProvider.read(StorageKey.idUser)}");
   //     if (response.statusCode == 201) {
-  //       final ResponsePinjam responsePinjam = ResponsePinjam.fromJson(response.data);
-  //       if(responsePinjam.data!.isEmpty) {
+  //       final ResponseRiwayat responseRiwayat = ResponseRiwayat.fromJson(response.data);
+  //       if(responseRiwayat.data!.isEmpty) {
   //         change(null, status: RxStatus.empty());
   //       } else {
-  //         List<DataPinjam> dataPinjam = responsePinjam.data!;
+  //         List<DataPinjam> dataPinjam = responseRiwayat.data!;
   //         List<DataPinjam> filteredData = dataPinjam.where((item) => item.userID == StorageProvider.read(StorageKey.idUser)).toList();
   //         if(filteredData.isEmpty) {
   //           change(null, status: RxStatus.empty());

@@ -5,7 +5,6 @@ import 'package:nowlib_peminjam/app/data/model/response_buku.dart';
 
 import '../../../data/constant/endpoint.dart';
 import '../../../data/provider/api_provider.dart';
-import '../../../routes/app_pages.dart';
 
 class HomeController extends GetxController with StateMixin<List<DataBuku>> {
   final RxInt count = 0.obs;

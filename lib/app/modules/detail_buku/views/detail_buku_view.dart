@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:nowlib_peminjam/themes.dart';
 
 import '../../../data/model/response_buku.dart';
 import '../controllers/detail_buku_controller.dart';
@@ -10,41 +11,65 @@ class DetailBukuView extends GetView<DetailBukuController> {
 
   @override
   Widget build(BuildContext context) {
-    final bookID = Get.parameters['id'] as String?; // Ubah 'id' menjadi 'BookID' sesuai dengan parameters yang dikirim dari HomeView
-
-    final DataBuku? buku = controller.findBukuById(bookID);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detail Buku'),
         centerTitle: true,
       ),
-      body: buku != null
-          ? SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+      body: SingleChildScrollView(
+        child: Center(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Tampilkan detail buku
-              Text(
-                'Judul: ${buku.judul}',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Container(
+                margin: EdgeInsets.only(left: 10.0),
+                child: Padding(padding: EdgeInsets.all(8.0),
+                  child: controller.obx((state) => ListView.builder(
+                      // itemCount: state!.length,
+                      itemBuilder: (context, index) {
+                        Container(
+                          margin: const EdgeInsets.only(right: 10),
+                          child: Row(
+                            children: [
+                              Container(
+                                height: 200,
+                                width: 250,
+                                decoration: BoxDecoration(
+                                  image: state![index].gambar != null
+                                  ? DecorationImage(
+                                      image: NetworkImage(state![index].gambar!)
+                                  ): null,
+                                ),
+                              ),
+                              SizedBox(width: 20),
+                              Column(
+                                children: [
+                                  Text(
+                                    "${state[index].judul}",
+                                    style: regularFont,
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    "${state[index].penulis}",
+                                    style: regularFont2,
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    "${state[index].penerbit}",
+                                    style: regularFont3,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                  ),
+                  ),
+                ),
               ),
-              SizedBox(height: 10),
-              Text('Penulis: ${buku.penulis}'),
-              SizedBox(height: 5),
-              Text('Penerbit: ${buku.penerbit}'),
-              SizedBox(height: 20),
-              Text('Deskripsi: ${buku.deskripsi}'),
-              SizedBox(height: 20),
-              // Tambahkan widget lain sesuai dengan detail buku
             ],
           ),
         ),
-      )
-          : Center(
-        child: CircularProgressIndicator(),
       ),
     );
   }

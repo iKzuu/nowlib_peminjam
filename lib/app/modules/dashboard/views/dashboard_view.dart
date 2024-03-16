@@ -1,3 +1,5 @@
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -18,34 +20,28 @@ class DashboardView extends StatefulWidget {
 class _DashboardViewState extends State<DashboardView> {
   int _currentIndex = 0;
 
+  final List<Widget> _pages = [
+    HomeView(),
+    KoleksiView(),
+    PeminjamanView(),
+    ProfileView(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: IndexedStack(
-          index: _currentIndex,
-          children: [
-            HomeView(),
-            KoleksiView(),
-            PeminjamanView(),
-            ProfileView(),
-          ],
-        ),
+        child: _pages[_currentIndex],
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.black,
-        unselectedItemColor: Colors.greenAccent,
-        selectedItemColor: Colors.lightBlue,
+        color: Colors.grey,
+        buttonBackgroundColor: Colors.blue,
         onTap: (index) {
           setState(() {
             _currentIndex = index;
           });
         },
-        currentIndex: _currentIndex,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        iconSize: 35.0,
         items: [
           _bottomNavigationBarItem(
             icon: Icons.home_outlined,
@@ -70,9 +66,9 @@ class _DashboardViewState extends State<DashboardView> {
 }
 
 _bottomNavigationBarItem({icon, label}) {
-  return BottomNavigationBarItem(
-    icon: Icon(icon),
-    label: label,
+  return CurvedNavigationBarItem(
+      child: Icon(icon),
+      label: label,
   );
 }
 
