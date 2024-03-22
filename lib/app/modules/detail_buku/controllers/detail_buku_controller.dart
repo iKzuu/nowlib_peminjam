@@ -1,11 +1,18 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/constant/endpoint.dart';
 import '../../../data/model/response_detail.dart';
 import '../../../data/provider/api_provider.dart';
+import '../../../data/provider/storage_provider.dart';
+import '../../../routes/app_pages.dart';
 
-class DetailBukuController extends GetxController with StateMixin<List<DataDetail>>{
+class DetailBukuController extends GetxController with StateMixin<DataDetail>{
+  final loading = false.obs;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
 
   final count = 0.obs;
   @override
@@ -24,8 +31,41 @@ class DetailBukuController extends GetxController with StateMixin<List<DataDetai
     super.onClose();
   }
 
+  //post koleksi
+  post() async {
+    loading(true);
+    try {
+      FocusScope.of(Get.context!).unfocus(); //ngeclose keyboard
+      formKey.currentState?.save();
+      if(formKey.currentState!.validate()) {
+        final response = await ApiProvider.instance().post(Endpoint.addkol,
+            data:
+            {
+              "UserID": int.parse(StorageProvider.read(StorageKey.idUser)),
+              "BookID": int.parse(Get.parameters['id'].toString()),
+            });
+        if (response.statusCode == 201) {
+          Get.snackbar("Selamat", "Berhasil menambah koleksi", backgroundColor: Colors.blue);
+        } else {
+          Get.snackbar("Sorry", "Gagal menambah koleksi", backgroundColor: Colors.orange);
+        }
+      }
+    } on DioException catch (e){
+      loading(false);
+      if (e.response != null) {
+        if (e.response?.data != null) {
+          Get.snackbar("Sorry", "${e.response?.data['message']}", backgroundColor: Colors.orange);
+        }
+      } else {
+        Get.snackbar("Sorry", e.message ?? "", backgroundColor: Colors.red);
+      }
+    } catch (e) {
+      loading(false);
+      Get.snackbar("Error", e.toString(), backgroundColor: Colors.red);
+    }
+  }
 
-
+  //get data detail buku
   Future<void> getData () async {
     change(null, status: RxStatus.loading());
     var idBuku = Get.parameters['id'];
@@ -35,8 +75,8 @@ class DetailBukuController extends GetxController with StateMixin<List<DataDetai
         final ResponseDetail responseDetail = ResponseDetail.fromJson(response.data);
         if(responseDetail.data == null) {
           change(null, status: RxStatus.empty());
-        }else if (responseDetail.data is List){
-          change(responseDetail.data as List<DataDetail>?, status: RxStatus.success());
+        }else {
+          change(responseDetail.data, status: RxStatus.success());
         }
       }else{
         change(null, status: RxStatus.error("gagal mengambil data"));

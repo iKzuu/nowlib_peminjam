@@ -142,9 +142,10 @@ class HomeView extends GetView<HomeController> {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            Get.toNamed(Routes.MEMINJAMN,
+                            Get.toNamed(Routes.DETAIL_BUKU,
                                 parameters: {
-                                  'id': state[index].bookID.toString()
+                                  'id': state[index].bookID.toString(),
+                                  'judul': state[index].judul.toString(),
                                 }
                                 );
                           },
@@ -211,9 +212,10 @@ class HomeView extends GetView<HomeController> {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            Get.toNamed(Routes.MEMINJAMN,
+                            Get.toNamed(Routes.DETAIL_BUKU,
                                 parameters: {
-                                  'id': state[index].bookID.toString()
+                                  'id': state[index].bookID.toString(),
+                                  'judul' : state[index].judul.toString(),
                                 }
                                 );
                           },

@@ -60,6 +60,7 @@ class PeminjamanView extends GetView<PeminjamanController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SizedBox(height: 20),
                             Text(
                               "${state[index].buku?.judul}",
                               style: regularFont,

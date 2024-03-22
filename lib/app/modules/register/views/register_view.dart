@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nowlib_peminjam/app/modules/login/views/login_view.dart';
 
+import '../../../../themes.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/register_controller.dart';
 
@@ -24,7 +25,7 @@ class RegisterView extends GetView<RegisterController> {
             ),
             const SizedBox(height: 30.0),
             Container(
-              width: 350.0,
+              width: 335.0,
               height: 460.0,
               decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
@@ -49,6 +50,7 @@ class RegisterView extends GetView<RegisterController> {
                                 filled: true,
                                 fillColor: Colors.transparent,
                                 labelText: 'Username',
+                                labelStyle: regularFont3,
                                 prefixIcon: const Icon(Icons.person),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20.0),
@@ -68,6 +70,7 @@ class RegisterView extends GetView<RegisterController> {
                                 filled: true,
                                 fillColor: Colors.transparent,
                                 labelText: 'Email',
+                                labelStyle: regularFont3,
                                 prefixIcon: Icon(Icons.mail),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
@@ -88,6 +91,7 @@ class RegisterView extends GetView<RegisterController> {
                                 filled: true,
                                 fillColor: Colors.transparent,
                                 labelText: 'Nama Lengkap',
+                                labelStyle: regularFont3,
                                 prefixIcon: Icon(Icons.person_outline),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
@@ -109,6 +113,7 @@ class RegisterView extends GetView<RegisterController> {
                                 filled: true,
                                 fillColor: Colors.transparent,
                                 labelText: 'Password',
+                                labelStyle: regularFont3,
                                 prefixIcon: Icon(Icons.lock),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
@@ -129,6 +134,7 @@ class RegisterView extends GetView<RegisterController> {
                                 filled: true,
                                 fillColor: Colors.transparent,
                                 labelText: 'Alamat',
+                                labelStyle: regularFont3,
                                 prefixIcon: Icon(Icons.map),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
@@ -139,7 +145,7 @@ class RegisterView extends GetView<RegisterController> {
                             ),
                           ),
 
-                          const SizedBox(height: 20.0),
+                          const SizedBox(height: 22.0),
 
                           Obx(() => controller.loading.value?
                           CircularProgressIndicator():
@@ -147,7 +153,10 @@ class RegisterView extends GetView<RegisterController> {
                             onPressed: () {
                               controller.register();
                             },
-                            child: Text("Daftar"),
+                            child: Text(
+                              "Daftar",
+                              style: regularFont3,
+                            ),
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent), // Ubah warna latar belakang
                               foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Ubah warna teks

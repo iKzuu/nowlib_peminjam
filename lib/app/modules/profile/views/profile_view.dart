@@ -12,6 +12,14 @@ class ProfileView extends GetView<ProfileController> {
       appBar: AppBar(
         title: const Text('ProfileView'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              controller.logout();
+            },
+          ),
+        ],
       ),
       body: const Center(
         child: Text(

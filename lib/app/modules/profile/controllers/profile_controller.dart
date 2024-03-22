@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../routes/app_pages.dart';
 
 class ProfileController extends GetxController {
   //TODO: Implement ProfileController
@@ -8,6 +11,14 @@ class ProfileController extends GetxController {
   void onInit() {
     super.onInit();
   }
+
+  void logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+    Get.offAllNamed(Routes.LOGIN);
+  }
+
+
 
   @override
   void onReady() {
