@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nowlib_peminjam/app/routes/app_pages.dart';
 import 'package:nowlib_peminjam/themes.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import '../controllers/detail_buku_controller.dart';
 
 class DetailBukuView extends GetView<DetailBukuController> {
@@ -81,12 +83,80 @@ class DetailBukuView extends GetView<DetailBukuController> {
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-                                    Get.toNamed(Routes.MEMINJAMN,
-                                      parameters: {
-                                        'id': state.bookID.toString(),
-                                        'judul': state.judul.toString(),
+
+                                    QuickAlert.show(
+
+                                      context: context,
+                                      type: QuickAlertType.confirm,
+                                      title: 'Konfirmasi',
+                                      titleColor: Colors.blue,
+                                      text: 'Mau meminjam buku?',
+                                      confirmBtnText: 'Iya',
+                                      cancelBtnText: 'Enggak',
+                                      confirmBtnColor: Colors.blue,
+                                      onConfirmBtnTap: () {
+                                        // Get.back();
+                                        // QuickAlert.show(
+                                        //   context: context,
+                                        //   type: QuickAlertType.custom,
+                                        //   barrierDismissible: true,
+                                        //   customAsset: 'assets/giff/bgktg.gif',
+                                        //   confirmBtnText: 'Pinjam',
+                                        //   confirmBtnColor: Colors.blue,
+                                        //   title: 'Isi form untuk meminjam',
+                                        //   widget: Form(
+                                        //     key: controller.formKey,
+                                        //     child: Column(
+                                        //       children: [
+                                        //         TextFormField(
+                                        //           controller: controller.tglKembaliController,
+                                        //           decoration: InputDecoration(
+                                        //             labelText: 'Tanggal Pengembalian',
+                                        //           ),
+                                        //         ),
+                                        //       ],
+                                        //     ),
+                                        //   ),
+                                        //   onConfirmBtnTap: () {
+                                        //     Get.toNamed(Routes.NOTA);
+                                        //     String? id = Get.parameters['id'];
+                                        //     if (id != null) {
+                                        //       controller.pinjam(int.parse(id));
+                                        //     }
+                                        //   }
+                                        // );
+
+                                        Get.back();
+                                        Get.toNamed(Routes.MEMINJAMN,
+                                          parameters: {
+                                            'id': state.bookID.toString(),
+                                            'judul': state.judul.toString(),
+                                          }
+                                        );
                                       },
                                     );
+
+                                    // Get.defaultDialog(
+                                    //   title: "Konfirmasi",
+                                    //   middleText: "Mau meminjam buku?",
+                                    //   textConfirm: "Iya",
+                                    //   textCancel: 'enggak',
+                                    //   confirmTextColor: Colors.white,
+                                    //   cancelTextColor: Colors.red,
+                                    //   buttonColor: Colors.blue,
+                                    //   // onCancel: () {
+                                    //   //   Get.back();
+                                    //   // },
+                                    //   onConfirm: () {
+                                    //     Get.back();
+                                    //     Get.toNamed(Routes.MEMINJAMN,
+                                    //       parameters: {
+                                    //         'id': state.bookID.toString(),
+                                    //         'judul': state.judul.toString(),
+                                    //       },
+                                    //     );
+                                    //   }
+                                    // );
                                   },
                                   child: Text(
                                     "Pinjam",
@@ -105,8 +175,12 @@ class DetailBukuView extends GetView<DetailBukuController> {
                                 ),
                                 SizedBox(width: 20),
                                 IconButton(
+                                  // key: controller.formKey,
                                   onPressed: () {
-                                    controller.post();
+                                    String? id = Get.parameters['id'];
+                                    if (id != null) {
+                                      controller.post(int.parse(id));
+                                    }
                                   },
                                   icon: Icon(
                                     Icons.bookmark_border_outlined,

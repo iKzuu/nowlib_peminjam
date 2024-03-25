@@ -5,7 +5,6 @@ import 'package:nowlib_peminjam/app/data/model/response_koleksi.dart';
 import '../../../data/constant/endpoint.dart';
 import '../../../data/provider/api_provider.dart';
 import '../../../data/provider/storage_provider.dart';
-import '../../../routes/app_pages.dart';
 
 class KoleksiController extends GetxController with StateMixin<List<DataKoleksi>>{
 

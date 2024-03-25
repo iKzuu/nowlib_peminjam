@@ -12,6 +12,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/meminjamn/bindings/meminjamn_binding.dart';
 import '../modules/meminjamn/views/meminjamn_view.dart';
+import '../modules/nota/bindings/nota_binding.dart';
+import '../modules/nota/views/nota_view.dart';
 import '../modules/peminjaman/bindings/peminjaman_binding.dart';
 import '../modules/peminjaman/views/peminjaman_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
@@ -56,7 +58,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DETAIL_BUKU,
-      page: () => const DetailBukuView(),
+      page: () =>  const DetailBukuView(),
       binding: DetailBukuBinding(),
     ),
     GetPage(
@@ -78,6 +80,11 @@ class AppPages {
       name: _Paths.SPLASHSCREEN,
       page: () => const SplashscreenView(),
       binding: SplashscreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.NOTA,
+      page: () => const NotaView(),
+      binding: NotaBinding(),
     ),
   ];
 }

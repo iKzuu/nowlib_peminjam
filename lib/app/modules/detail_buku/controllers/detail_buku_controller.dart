@@ -7,11 +7,12 @@ import '../../../data/constant/endpoint.dart';
 import '../../../data/model/response_detail.dart';
 import '../../../data/provider/api_provider.dart';
 import '../../../data/provider/storage_provider.dart';
-import '../../../routes/app_pages.dart';
 
 class DetailBukuController extends GetxController with StateMixin<DataDetail>{
   final loading = false.obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool isBookmarked = false;
+  final TextEditingController tglKembaliController = TextEditingController();
 
 
   final count = 0.obs;
@@ -31,25 +32,76 @@ class DetailBukuController extends GetxController with StateMixin<DataDetail>{
     super.onClose();
   }
 
-  //post koleksi
-  post() async {
+  // pinjam(int id) async {
+  //   loading(true);
+  //   try {
+  //     int? userId = int.tryParse(StorageProvider.read(StorageKey.idUser) ?? "");
+  //     FocusScope.of(Get.context!).unfocus(); //ngeclose keyboard
+  //     formKey.currentState?.save();
+  //     if(formKey.currentState!.validate()) {
+  //       final tglKembali = tglKembaliController.text;
+  //
+  //       final response = await ApiProvider.instance().post(Endpoint.peminjaman,
+  //           data:
+  //           {
+  //             "UserID": userId,
+  //             "BookID": id,
+  //             "TglPengembalian": tglKembali,
+  //           });
+  //       if (response.statusCode == 201) {
+  //         QuickAlert.show(
+  //           context: Get.context!,
+  //           type: QuickAlertType.success,
+  //           confirmBtnText: 'OK',
+  //           title: 'Berhasil',
+  //           titleColor: Colors.blue,
+  //           text: 'Kamu berhasil meminjam buku',
+  //         );
+  //       } else {
+  //         Get.snackbar("Sorry", "Gagal meminjam", backgroundColor: Colors.orange);
+  //       }
+  //     }
+  //
+  //   } on DioException catch (e){
+  //     loading(false);
+  //     if (e.response != null) {
+  //       if (e.response?.data != null) {
+  //         QuickAlert.show(
+  //           context: Get.context!,
+  //           type: QuickAlertType.error,
+  //           title: 'Gagal',
+  //           titleColor: Colors.red,
+  //           text: '${e.response?.data['message']}',
+  //           confirmBtnText: 'OK',
+  //           confirmBtnColor: Colors.red,
+  //         );
+  //       }
+  //     } else {
+  //       Get.snackbar("Sorry", e.message ?? "", backgroundColor: Colors.red);
+  //     }
+  //   } catch (e) {
+  //     loading(false);
+  //     Get.snackbar("Error", e.toString(), backgroundColor: Colors.red);
+  //   }
+  // }
+
+  post(int id) async {
     loading(true);
     try {
-      FocusScope.of(Get.context!).unfocus(); //ngeclose keyboard
-      formKey.currentState?.save();
-      if(formKey.currentState!.validate()) {
+        int? userId = int.tryParse(StorageProvider.read(StorageKey.idUser) ?? "");
+
         final response = await ApiProvider.instance().post(Endpoint.addkol,
             data:
             {
-              "UserID": int.parse(StorageProvider.read(StorageKey.idUser)),
-              "BookID": int.parse(Get.parameters['id'].toString()),
+              "UserID": userId,
+              "BookID": id,
             });
         if (response.statusCode == 201) {
           Get.snackbar("Selamat", "Berhasil menambah koleksi", backgroundColor: Colors.blue);
+          isBookmarked = true;
         } else {
           Get.snackbar("Sorry", "Gagal menambah koleksi", backgroundColor: Colors.orange);
         }
-      }
     } on DioException catch (e){
       loading(false);
       if (e.response != null) {
@@ -65,7 +117,36 @@ class DetailBukuController extends GetxController with StateMixin<DataDetail>{
     }
   }
 
-  //get data detail buku
+  //==========================================delete koleksi=================================================
+
+  // delete(int id) async {
+  //   loading(true);
+  //   try {
+  //     final response = await ApiProvider.instance().delete('${Endpoint.deletekol}?id=$id');
+  //     if (response.statusCode == 201) {
+  //       Get.snackbar("Selamat", "Berhasil menghapus koleksi", backgroundColor: Colors.blue);
+  //       // Ubah status bookmark menjadi outline
+  //       isBookmarked = false;
+  //     } else {
+  //       Get.snackbar("Sorry", "Gagal menghapus koleksi", backgroundColor: Colors.orange);
+  //     }
+  //   } on DioException catch (e) {
+  //     loading(false);
+  //     if (e.response != null) {
+  //       if (e.response?.data != null) {
+  //         Get.snackbar("Sorry", "${e.response?.data['message']}", backgroundColor: Colors.orange);
+  //       }
+  //     } else {
+  //       Get.snackbar("Sorry", e.message ?? "", backgroundColor: Colors.red);
+  //     }
+  //   } catch (e) {
+  //     loading(false);
+  //     Get.snackbar("Error", e.toString(), backgroundColor: Colors.red);
+  //   }
+  // }
+
+  //==========================================get data detail buku=============================================
+
   Future<void> getData () async {
     change(null, status: RxStatus.loading());
     var idBuku = Get.parameters['id'];

@@ -14,6 +14,7 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const MEMINJAMN = _Paths.MEMINJAMN;
   static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
+  static const NOTA = _Paths.NOTA;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const MEMINJAMN = '/meminjamn';
   static const SPLASHSCREEN = '/splashscreen';
+  static const NOTA = '/nota';
 }

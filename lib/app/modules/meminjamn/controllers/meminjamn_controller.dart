@@ -1,15 +1,20 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 import '../../../data/constant/endpoint.dart';
+import '../../../data/model/response_detail.dart';
+import '../../../data/model/response_peminjaman.dart';
 import '../../../data/provider/api_provider.dart';
 import '../../../data/provider/storage_provider.dart';
 import '../../../routes/app_pages.dart';
 
-class MeminjamnController extends GetxController {
+class MeminjamnController extends GetxController with StateMixin<DataDetail>{
   final loading = false.obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController tglPinjamController = TextEditingController();
@@ -21,6 +26,7 @@ class MeminjamnController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getData();
   }
 
   @override
@@ -49,6 +55,36 @@ class MeminjamnController extends GetxController {
 
   void increment() => count.value++;
 
+  Future<void> getData () async {
+    change(null, status: RxStatus.loading());
+    var idBuku = Get.parameters['id'];
+    try {
+      final response = await ApiProvider.instance().get("${Endpoint.buku}?id=$idBuku");
+      if (response.statusCode == 200) {
+        final ResponseDetail responseDetail = ResponseDetail.fromJson(response.data);
+        if(responseDetail.data == null) {
+          change(null, status: RxStatus.empty());
+        }else {
+          change(responseDetail.data, status: RxStatus.success());
+        }
+      }else{
+        change(null, status: RxStatus.error("gagal mengambil data"));
+      }
+
+    }on DioException catch (e){
+      if (e.response != null) {
+        if (e.response?.data != null) {
+          change(null, status: RxStatus.error("${e.response?.data['message']}"));
+        }
+      }else{
+        change(null, status: RxStatus.error(e.message ?? ""));
+
+      }
+    }catch (e) {
+      change(null, status: RxStatus.error(e.toString()));
+    }
+  }
+
   post() async {
     loading(true);
     try {
@@ -67,8 +103,24 @@ class MeminjamnController extends GetxController {
               "TglPengembalian": tglKembali,
             });
         if (response.statusCode == 201) {
-          Get.snackbar("Selamat", "Berhasil meminjam", backgroundColor: Colors.blue);
-          Get.offNamed(Routes.PEMINJAMAN);
+          QuickAlert.show(
+            context: Get.context!,
+            type: QuickAlertType.success,
+            confirmBtnText: 'Yey',
+            title: 'Selamat!',
+            textAlignment: TextAlign.center,
+            text: 'Berhasil meminjam buku ${state?.judul.toString()}',
+            onConfirmBtnTap: () {
+              Get.offAllNamed(Routes.NOTA,
+                  parameters: {
+                    'Judul': Get.parameters['judul'] ?? '',
+                    'Namalengkap' : StorageProvider.read(StorageKey.namalengkap),
+                    'TglPeminjaman': tglPinjamController.text.toString(),
+                    'TglPengembalian' : tglKembaliController.text.toString(),
+                  }
+              );
+            }
+          );
         } else {
           Get.snackbar("Sorry", "Gagal meminjam", backgroundColor: Colors.orange);
         }
@@ -77,7 +129,15 @@ class MeminjamnController extends GetxController {
       loading(false);
       if (e.response != null) {
         if (e.response?.data != null) {
-          Get.snackbar("Sorry", "${e.response?.data['message']}", backgroundColor: Colors.orange);
+          QuickAlert.show(
+            context: Get.context!,
+            type: QuickAlertType.error,
+            title: 'Gagal',
+            titleColor: Colors.red,
+            text: '${e.response?.data['message']}',
+            confirmBtnText: 'OK',
+            confirmBtnColor: Colors.red,
+          );
         }
       } else {
         Get.snackbar("Sorry", e.message ?? "", backgroundColor: Colors.red);

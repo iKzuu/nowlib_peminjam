@@ -60,7 +60,11 @@ class LoginController extends GetxController {
           final responseData = response.data;
           final token = responseData['data']['token'];
           await StorageProvider.write(
-              StorageKey.idUser, responseData['data']['UserID'].toString());
+            StorageKey.idUser, responseData['data']['UserID'].toString(),
+          );
+          await StorageProvider.write(
+            StorageKey.namalengkap, responseData['data']['Namalengkap'].toString(),
+          );
           await StorageProvider.write(StorageKey.status, "logged");
           final prefs = await SharedPreferences.getInstance();
           prefs.setString('token', token ?? '');
