@@ -41,14 +41,14 @@ class DetailBukuView extends GetView<DetailBukuController> {
                                 width: 120,
                                 height: 180,
                                 decoration: BoxDecoration(
-                                  image: state!.gambar != null
+                                  image: state!.buku?.gambar != null
                                       ? DecorationImage(
-                                    image: NetworkImage(state.gambar!),
+                                    image: NetworkImage(state.buku!.gambar!),
                                     fit: BoxFit.cover,
                                   ) : null,
                                 ),
                                 child: Center(
-                                  child: state.gambar == null ? Text(
+                                  child: state.buku?.gambar == null ? Text(
                                     "No Cover",
                                     style: regularFont2,
                                   ) : null,
@@ -65,17 +65,17 @@ class DetailBukuView extends GetView<DetailBukuController> {
                           children: [
                             SizedBox(height: 5),
                             Text(
-                              state.judul ?? '',
+                              state.buku?.judul ?? '',
                               style: regularFont,
                             ),
                             SizedBox(height: 5),
                             Text(
-                              state.penulis ?? '',
+                              state.buku?.penulis ?? '',
                               style: regularFont2,
                             ),
                             SizedBox(height: 5),
                             Text(
-                              state.penerbit ?? '',
+                              state.buku?.penerbit ?? '',
                               style: regularFont2,
                             ),
                             SizedBox(height: 52),
@@ -129,8 +129,8 @@ class DetailBukuView extends GetView<DetailBukuController> {
                                         Get.back();
                                         Get.toNamed(Routes.MEMINJAMN,
                                           parameters: {
-                                            'id': state.bookID.toString(),
-                                            'judul': state.judul.toString(),
+                                            'id': state.buku?.bookID.toString() ?? '',
+                                            'judul': state.buku?.judul.toString() ?? '',
                                           }
                                         );
                                       },
@@ -200,7 +200,7 @@ class DetailBukuView extends GetView<DetailBukuController> {
                       ],
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,7 +221,44 @@ class DetailBukuView extends GetView<DetailBukuController> {
                         //     print(rating);
                         //   },
                         // ),
-                        SizedBox(height: 5),
+                        Row(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 90,
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  textAlign: TextAlign.center,
+                                  state.genre?.namagenre ?? '',
+                                  style: regularFont2.copyWith(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 20),
+                            Container(
+                              height: 40,
+                              width: 90,
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  textAlign: TextAlign.center,
+                                  state.kategoribuku?.namaKategori ?? '',
+                                  style: regularFont2.copyWith(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20),
                         Text(
                           'Deskripsi',
                           style: regularFont,
@@ -230,7 +267,7 @@ class DetailBukuView extends GetView<DetailBukuController> {
                           height: 5,
                         ),
                         Text(
-                          state.deskripsi ?? '',
+                          state.buku?.deskripsi ?? '',
                           style: regularFont4,
                         ),
                       ],

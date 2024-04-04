@@ -5,10 +5,11 @@ import 'package:get/get.dart';
 
 import '../../../data/constant/endpoint.dart';
 import '../../../data/model/response_detail.dart';
+import '../../../data/model/response_detailrelasi.dart';
 import '../../../data/provider/api_provider.dart';
 import '../../../data/provider/storage_provider.dart';
 
-class DetailBukuController extends GetxController with StateMixin<DataDetail>{
+class DetailBukuController extends GetxController with StateMixin<DataDetailrelasi>{
   final loading = false.obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isBookmarked = false;
@@ -149,15 +150,15 @@ class DetailBukuController extends GetxController with StateMixin<DataDetail>{
 
   Future<void> getData () async {
     change(null, status: RxStatus.loading());
-    var idBuku = Get.parameters['id'];
+    var idRelasi = Get.parameters['id'];
     try {
-      final response = await ApiProvider.instance().get("${Endpoint.buku}?id=$idBuku");
+      final response = await ApiProvider.instance().get("${Endpoint.relasi}?id=$idRelasi");
       if (response.statusCode == 200) {
-        final ResponseDetail responseDetail = ResponseDetail.fromJson(response.data);
-        if(responseDetail.data == null) {
+        final ResponseDetailrelasi responseDetailrelasi = ResponseDetailrelasi.fromJson(response.data);
+        if(responseDetailrelasi.data == null) {
           change(null, status: RxStatus.empty());
         }else {
-          change(responseDetail.data, status: RxStatus.success());
+          change(responseDetailrelasi.data, status: RxStatus.success());
         }
       }else{
         change(null, status: RxStatus.error("gagal mengambil data"));
@@ -176,6 +177,36 @@ class DetailBukuController extends GetxController with StateMixin<DataDetail>{
       change(null, status: RxStatus.error(e.toString()));
     }
   }
+
+  // Future<void> getData () async {
+  //   change(null, status: RxStatus.loading());
+  //   var idBuku = Get.parameters['id'];
+  //   try {
+  //     final response = await ApiProvider.instance().get("${Endpoint.buku}?id=$idBuku");
+  //     if (response.statusCode == 200) {
+  //       final ResponseDetail responseDetail = ResponseDetail.fromJson(response.data);
+  //       if(responseDetail.data == null) {
+  //         change(null, status: RxStatus.empty());
+  //       }else {
+  //         change(responseDetail.data, status: RxStatus.success());
+  //       }
+  //     }else{
+  //       change(null, status: RxStatus.error("gagal mengambil data"));
+  //     }
+  //
+  //   }on DioException catch (e){
+  //     if (e.response != null) {
+  //       if (e.response?.data != null) {
+  //         change(null, status: RxStatus.error("${e.response?.data['message']}"));
+  //       }
+  //     }else{
+  //       change(null, status: RxStatus.error(e.message ?? ""));
+  //
+  //     }
+  //   }catch (e) {
+  //     change(null, status: RxStatus.error(e.toString()));
+  //   }
+  // }
 
   void increment() => count.value++;
 }

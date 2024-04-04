@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:nowlib_peminjam/app/modules/home/views/home_view.dart';
 import 'package:nowlib_peminjam/themes.dart';
 
 import '../../../routes/app_pages.dart';
-import '../../register/views/register_view.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {

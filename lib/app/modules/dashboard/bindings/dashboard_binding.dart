@@ -4,6 +4,7 @@ import 'package:nowlib_peminjam/app/modules/home/controllers/home_controller.dar
 import 'package:nowlib_peminjam/app/modules/koleksi/controllers/koleksi_controller.dart';
 import 'package:nowlib_peminjam/app/modules/peminjaman/controllers/peminjaman_controller.dart';
 import 'package:nowlib_peminjam/app/modules/profile/controllers/profile_controller.dart';
+import 'package:nowlib_peminjam/app/modules/splashscreen/controllers/splashscreen_controller.dart';
 
 import '../controllers/dashboard_controller.dart';
 

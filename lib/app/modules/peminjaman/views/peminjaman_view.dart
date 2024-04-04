@@ -25,7 +25,7 @@ class PeminjamanView extends GetView<PeminjamanController> {
             itemBuilder: (context, index){
               return Material(
                 child: Container(
-                  height: 200,
+                  height: 210,
                   decoration: BoxDecoration(
                     color: Colors.white38,
                     border: Border.all(
@@ -60,24 +60,32 @@ class PeminjamanView extends GetView<PeminjamanController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 20),
+                            SizedBox(height: 25),
                             Text(
                               "${state[index].buku?.judul}",
                               style: regularFont,
                             ),
+                            SizedBox(height: 10),
                             Text(
-                              "Pengarang  : ${state[index].buku?.penulis}",
+                              "Penulis  : ${state[index].buku?.penulis}",
                               style: regularFont3,
                             ),
+                            SizedBox(height: 10),
                             Text(
                               "Penerbit   : ${state[index].buku?.penerbit}",
                               style: regularFont3,
                             ),
+                            SizedBox(height: 10),
                             Flexible(
                               child: AutoSizeText(
                                 "tanggal kembali   : ${state[index].tglPengembalian}",
                                 style: regularFont3,
                               ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "Status   : ${state[index].status}",
+                              style: regularFont3.copyWith(color: Colors.green),
                             ),
                           ],
                         ),

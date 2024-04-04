@@ -15,6 +15,8 @@ abstract class Routes {
   static const MEMINJAMN = _Paths.MEMINJAMN;
   static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
   static const NOTA = _Paths.NOTA;
+  static const ADMINPAGE = _Paths.ADMINPAGE;
+  static const ADDBOOK = _Paths.ADDBOOK;
 }
 
 abstract class _Paths {
@@ -31,4 +33,6 @@ abstract class _Paths {
   static const MEMINJAMN = '/meminjamn';
   static const SPLASHSCREEN = '/splashscreen';
   static const NOTA = '/nota';
+  static const ADMINPAGE = '/adminpage';
+  static const ADDBOOK = '/addbook';
 }

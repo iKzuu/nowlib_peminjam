@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 
+import '../modules/addbook/bindings/addbook_binding.dart';
+import '../modules/addbook/views/addbook_view.dart';
+import '../modules/adminpage/bindings/adminpage_binding.dart';
+import '../modules/adminpage/views/adminpage_view.dart';
 import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
 import '../modules/detail_buku/bindings/detail_buku_binding.dart';
@@ -28,7 +32,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.SPLASHSCREEN;
 
   static final routes = [
     GetPage(
@@ -58,7 +62,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DETAIL_BUKU,
-      page: () =>  const DetailBukuView(),
+      page: () => const DetailBukuView(),
       binding: DetailBukuBinding(),
     ),
     GetPage(
@@ -85,6 +89,16 @@ class AppPages {
       name: _Paths.NOTA,
       page: () => const NotaView(),
       binding: NotaBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADMINPAGE,
+      page: () => const AdminpageView(),
+      binding: AdminpageBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADDBOOK,
+      page: () => const AddbookView(),
+      binding: AddbookBinding(),
     ),
   ];
 }

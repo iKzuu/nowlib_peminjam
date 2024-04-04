@@ -14,6 +14,11 @@ class StorageProvider {
     }
   }
 
+  static Future<void> delete(String key) async {
+    await GetStorage().remove(key);
+  }
+
+
   static void clearAll() {
     GetStorage().erase();
   }
@@ -26,5 +31,7 @@ class StorageKey {
   static const String idBuku = "idBuku";
   static const String idPinjam = "idPinjam";
   static const String token = "token";
+  static const String role = "role";
+  static const String alamat = "alamat";
 }
 

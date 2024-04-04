@@ -1,15 +1,13 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nowlib_peminjam/app/data/model/response_login.dart';
 
 import '../../../data/constant/endpoint.dart';
 import '../../../data/provider/api_provider.dart';
 import '../../../data/provider/storage_provider.dart';
 import '../../../routes/app_pages.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   final loading = false.obs;
@@ -25,19 +23,7 @@ class LoginController extends GetxController {
 
   @override
   void onReady() async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-
-    if (token != null) {
-      Get.offAllNamed(Routes.DASHBOARD);
-    }
-
     super.onReady();
-    String status = StorageProvider.read(StorageKey.status);
-    log("status : $status");
-    // if (status == "logged"){
-    //   Get.offAllNamed(Routes.DASHBOARD);
-    // }
   }
 
   @override
@@ -57,19 +43,32 @@ class LoginController extends GetxController {
               "Password": passwordController.text.toString()
             });
         if (response.statusCode == 201) {
-          final responseData = response.data;
-          final token = responseData['data']['token'];
+          ResponseLogin responseLogin = ResponseLogin.fromJson(response.data);
           await StorageProvider.write(
-            StorageKey.idUser, responseData['data']['UserID'].toString(),
+            StorageKey.idUser, responseLogin.data!.userID.toString(),
           );
           await StorageProvider.write(
-            StorageKey.namalengkap, responseData['data']['Namalengkap'].toString(),
+            StorageKey.namalengkap, responseLogin.data!.namalengkap.toString(),
           );
+          await StorageProvider.write(
+            StorageKey.alamat,responseLogin.data!.alamat.toString(),
+          );
+          // await StorageProvider.write(
+          //   StorageKey.role,responseData['data']['Role'].toString(),
+          // );
           await StorageProvider.write(StorageKey.status, "logged");
-          final prefs = await SharedPreferences.getInstance();
-          prefs.setString('token', token ?? '');
-
+          print("Status: ${StorageProvider.read(StorageKey.status)}");
+          await StorageProvider.write(StorageKey.token,responseLogin.token!);
+          // final role = responseData['data']['Role'];
+          // final prefs = await SharedPreferences.getInstance();
           Get.offAllNamed(Routes.DASHBOARD);
+          // if (role == 'admin' || role == 'petugas') {
+          //   // Redirect to admin page
+          //   Get.offAllNamed(Routes.ADMINPAGE);
+          // } else {
+          //   // Redirect to dashboard for regular user
+          //   Get.offAllNamed(Routes.DASHBOARD);
+          // }
         } else {
           Get.snackbar("Sorry", response.data['message'], backgroundColor: Colors.orange);
         }

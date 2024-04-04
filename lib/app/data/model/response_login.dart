@@ -6,7 +6,8 @@ class ResponseLogin {
   ResponseLogin({
       this.message, 
       this.data, 
-      this.token,});
+      this.token,
+  });
 
   ResponseLogin.fromJson(dynamic json) {
     message = json['message'];

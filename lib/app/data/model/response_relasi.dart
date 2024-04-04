@@ -1,6 +1,6 @@
 /// message : "kategori relasi found successfully"
 /// total : 3
-/// data : [{"KategorirelasiID":1,"Buku":{"Judul":"Pengembara Hitam","Penulis":"Mas Fuad","Penerbit":"Ngawi SMP","Gambar":null,"Deskripsi":" "},"Kategoribuku":{"NamaKategori":"Non Fiksi"},"Genre":{"Namagenre":"Manga Komik"}},{"KategorirelasiID":3,"Buku":{"Judul":"Kimetsu no Yaiba","Penulis":"Koyoharu Gotōge","Penerbit":"Shueisha","Gambar":"https://upload.wikimedia.org/wikipedia/id/0/09/Demon_Slayer_-_Kimetsu_no_Yaiba%2C_volume_1.jpg","Deskripsi":" "},"Kategoribuku":{"NamaKategori":"Fiksi"},"Genre":{"Namagenre":"Manga Komik"}}]
+/// data : [{"KategorirelasiID":1,"Buku":{"BookID":1,"Judul":"Pengembara Hitam","Penulis":"Mas Fuad","Penerbit":"Ngawi SMP","Gambar":null,"Deskripsi":" "},"Kategoribuku":{"KategoriID":1,"NamaKategori":"Non Fiksi"},"Genre":{"GenreID":1,"Namagenre":"Manga Komik"}},{"KategorirelasiID":3,"Buku":{"BookID":11,"Judul":"Kimetsu no Yaiba","Penulis":"Koyoharu Gotōge","Penerbit":"Shueisha","Gambar":"https://upload.wikimedia.org/wikipedia/id/0/09/Demon_Slayer_-_Kimetsu_no_Yaiba%2C_volume_1.jpg","Deskripsi":" "},"Kategoribuku":{"KategoriID":3,"NamaKategori":"Fiksi"},"Genre":{"GenreID":1,"Namagenre":"Manga Komik"}},{"KategorirelasiID":4,"Buku":{"BookID":24,"Judul":"Jujutsu Kaisen","Penulis":"Gege Akutami","Penerbit":"Shueisha","Gambar":"https://upload.wikimedia.org/wikipedia/id/4/46/Jujutsu_kaisen.jpg","Deskripsi":"Yūji Itadori adalah seorang siswa SMA dengan atletisitas yang tidak wajar yang tinggal di Sendai bersama kakeknya. Ia sering menghindari Klub Lari karena keengganannya pada bidang atletik, me"},"Kategoribuku":{"KategoriID":1,"NamaKategori":"Non Fiksi"},"Genre":{"GenreID":1,"Namagenre":"Manga Komik"}},{"KategorirelasiID":5,"Buku":{"BookID":23,"Judul":"Attack on Titan vol1","Penulis":"Hajime Isayama","Penerbit":"Kodansha","Gambar":"https://upload.wikimedia.org/wikipedia/id/d/d6/Shingeki_no_Kyojin_manga_volume_1.jpg","Deskripsi":"Dalam suatu sejarah alternatif sekitar 1800 tahun yang lalu, seorang manusia bernama Ymir Fritz berubah menjadi raksasa mirip manusia yang dikenal sebagai Titan (巨人 Kyojin) setelah melakukan "},"Kategoribuku":{"KategoriID":1,"NamaKategori":"Non Fiksi"},"Genre":{"GenreID":1,"Namagenre":"Manga Komik"}}]
 
 class ResponseRelasi {
   ResponseRelasi({
@@ -35,9 +35,9 @@ class ResponseRelasi {
 }
 
 /// KategorirelasiID : 1
-/// Buku : {"Judul":"Pengembara Hitam","Penulis":"Mas Fuad","Penerbit":"Ngawi SMP","Gambar":null,"Deskripsi":" "}
-/// Kategoribuku : {"NamaKategori":"Non Fiksi"}
-/// Genre : {"Namagenre":"Manga Komik"}
+/// Buku : {"BookID":1,"Judul":"Pengembara Hitam","Penulis":"Mas Fuad","Penerbit":"Ngawi SMP","Gambar":null,"Deskripsi":" "}
+/// Kategoribuku : {"KategoriID":1,"NamaKategori":"Non Fiksi"}
+/// Genre : {"GenreID":1,"Namagenre":"Manga Komik"}
 
 class DataRelasi {
   DataRelasi({
@@ -74,44 +74,55 @@ class DataRelasi {
 
 }
 
+/// GenreID : 1
 /// Namagenre : "Manga Komik"
 
 class Genre {
   Genre({
+      this.genreID, 
       this.namagenre,});
 
   Genre.fromJson(dynamic json) {
+    genreID = json['GenreID'];
     namagenre = json['Namagenre'];
   }
+  int? genreID;
   String? namagenre;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['GenreID'] = genreID;
     map['Namagenre'] = namagenre;
     return map;
   }
 
 }
 
+/// KategoriID : 1
 /// NamaKategori : "Non Fiksi"
 
 class Kategoribuku {
   Kategoribuku({
+      this.kategoriID, 
       this.namaKategori,});
 
   Kategoribuku.fromJson(dynamic json) {
+    kategoriID = json['KategoriID'];
     namaKategori = json['NamaKategori'];
   }
+  int? kategoriID;
   String? namaKategori;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['KategoriID'] = kategoriID;
     map['NamaKategori'] = namaKategori;
     return map;
   }
 
 }
 
+/// BookID : 1
 /// Judul : "Pengembara Hitam"
 /// Penulis : "Mas Fuad"
 /// Penerbit : "Ngawi SMP"
@@ -120,6 +131,7 @@ class Kategoribuku {
 
 class Buku {
   Buku({
+      this.bookID, 
       this.judul, 
       this.penulis, 
       this.penerbit, 
@@ -127,12 +139,14 @@ class Buku {
       this.deskripsi,});
 
   Buku.fromJson(dynamic json) {
+    bookID = json['BookID'];
     judul = json['Judul'];
     penulis = json['Penulis'];
     penerbit = json['Penerbit'];
     gambar = json['Gambar'];
     deskripsi = json['Deskripsi'];
   }
+  int? bookID;
   String? judul;
   String? penulis;
   String? penerbit;
@@ -141,6 +155,7 @@ class Buku {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['BookID'] = bookID;
     map['Judul'] = judul;
     map['Penulis'] = penulis;
     map['Penerbit'] = penerbit;
