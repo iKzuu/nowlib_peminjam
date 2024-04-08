@@ -17,6 +17,8 @@ abstract class Routes {
   static const NOTA = _Paths.NOTA;
   static const ADMINPAGE = _Paths.ADMINPAGE;
   static const ADDBOOK = _Paths.ADDBOOK;
+  static const KONFIRMASI = _Paths.KONFIRMASI;
+  static const DATA_PEMINJAMAN = _Paths.DATA_PEMINJAMAN;
 }
 
 abstract class _Paths {
@@ -35,4 +37,6 @@ abstract class _Paths {
   static const NOTA = '/nota';
   static const ADMINPAGE = '/adminpage';
   static const ADDBOOK = '/addbook';
+  static const KONFIRMASI = '/konfirmasi';
+  static const DATA_PEMINJAMAN = '/data-peminjaman';
 }

@@ -6,12 +6,16 @@ import '../modules/adminpage/bindings/adminpage_binding.dart';
 import '../modules/adminpage/views/adminpage_view.dart';
 import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
+import '../modules/data_peminjaman/bindings/data_peminjaman_binding.dart';
+import '../modules/data_peminjaman/views/data_peminjaman_view.dart';
 import '../modules/detail_buku/bindings/detail_buku_binding.dart';
 import '../modules/detail_buku/views/detail_buku_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/koleksi/bindings/koleksi_binding.dart';
 import '../modules/koleksi/views/koleksi_view.dart';
+import '../modules/konfirmasi/bindings/konfirmasi_binding.dart';
+import '../modules/konfirmasi/views/konfirmasi_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/meminjamn/bindings/meminjamn_binding.dart';
@@ -99,6 +103,16 @@ class AppPages {
       name: _Paths.ADDBOOK,
       page: () => const AddbookView(),
       binding: AddbookBinding(),
+    ),
+    GetPage(
+      name: _Paths.KONFIRMASI,
+      page: () => const KonfirmasiView(),
+      binding: KonfirmasiBinding(),
+    ),
+    GetPage(
+      name: _Paths.DATA_PEMINJAMAN,
+      page: () => const DataPeminjamanView(),
+      binding: DataPeminjamanBinding(),
     ),
   ];
 }

@@ -13,6 +13,14 @@ class AdminpageView extends GetView<AdminpageController> {
       appBar: AppBar(
         title: const Text('AdminpageView'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              controller.logout();
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Column(

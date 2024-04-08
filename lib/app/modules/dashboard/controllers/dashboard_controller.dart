@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nowlib_peminjam/app/data/provider/storage_provider.dart';
 import 'package:nowlib_peminjam/app/modules/adminpage/views/adminpage_view.dart';
+import 'package:nowlib_peminjam/app/modules/data_peminjaman/views/data_peminjaman_view.dart';
 import 'package:nowlib_peminjam/app/modules/home/controllers/home_controller.dart';
 import 'package:nowlib_peminjam/app/modules/koleksi/controllers/koleksi_controller.dart';
+import 'package:nowlib_peminjam/app/modules/konfirmasi/views/konfirmasi_view.dart';
 import 'package:nowlib_peminjam/app/modules/peminjaman/controllers/peminjaman_controller.dart';
 import 'package:nowlib_peminjam/app/modules/profile/controllers/profile_controller.dart';
 
@@ -31,8 +33,8 @@ class DashboardController extends GetxController {
   ];
   final screenAdmin = const [
     AdminpageView(),
-    AdminpageView(),
-    AdminpageView(),
+    DataPeminjamanView(),
+    KonfirmasiView(),
     AdminpageView(),
   ];
 
