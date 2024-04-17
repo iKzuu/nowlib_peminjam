@@ -23,16 +23,16 @@ class RegisterView extends GetView<RegisterController> {
               width: 200.0,
               height: 200.0,
             ),
-            const SizedBox(height: 30.0),
+            const SizedBox(height: 20.0),
             Container(
-              width: 335.0,
+              width: 320.0,
               height: 460.0,
               decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
-                  color: Colors.white,
+                  color: Colors.white.withOpacity(0.8),
                   border: Border.all(
-                    color: const Color.fromARGB(255, 123, 123, 123),
-                    width: 3.0,
+                    color: Colors.blue,
+                    width: 2.0,
                   ),
                   borderRadius: BorderRadius.circular(30.0)
               ),
@@ -48,7 +48,7 @@ class RegisterView extends GetView<RegisterController> {
                               controller: controller.usernameController,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.transparent,
+                                fillColor: Colors.white,
                                 labelText: 'Username',
                                 labelStyle: regularFont3,
                                 prefixIcon: const Icon(Icons.person),
@@ -68,7 +68,7 @@ class RegisterView extends GetView<RegisterController> {
                               controller: controller.emailController,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.transparent,
+                                fillColor: Colors.white,
                                 labelText: 'Email',
                                 labelStyle: regularFont3,
                                 prefixIcon: Icon(Icons.mail),
@@ -89,7 +89,7 @@ class RegisterView extends GetView<RegisterController> {
                               controller: controller.namaLengkapController,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.transparent,
+                                fillColor: Colors.white,
                                 labelText: 'Nama Lengkap',
                                 labelStyle: regularFont3,
                                 prefixIcon: Icon(Icons.person_outline),
@@ -111,7 +111,7 @@ class RegisterView extends GetView<RegisterController> {
                               obscureText: true,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.transparent,
+                                fillColor: Colors.white,
                                 labelText: 'Password',
                                 labelStyle: regularFont3,
                                 prefixIcon: Icon(Icons.lock),
@@ -132,7 +132,7 @@ class RegisterView extends GetView<RegisterController> {
                               controller: controller.alamatController,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.transparent,
+                                fillColor: Colors.white,
                                 labelText: 'Alamat',
                                 labelStyle: regularFont3,
                                 prefixIcon: Icon(Icons.map),
@@ -174,14 +174,23 @@ class RegisterView extends GetView<RegisterController> {
                   ),
             ),
 
-            const SizedBox(height: 35.0),
-
-            TextButton(
-              onPressed: () => Get.toNamed(Routes.LOGIN),
-              child: const Text(
-                'Back To Login',
-                style: TextStyle(
-                  color: Colors.white,
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: TextButton(
+                onPressed: () => Get.offAndToNamed(Routes.LOGIN),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                      size: 15,
+                    ),
+                    Text(
+                      'Back To Login',
+                      style: regularFont4.copyWith(color: Colors.white),
+                    ),
+                  ],
                 ),
               ),
             ),

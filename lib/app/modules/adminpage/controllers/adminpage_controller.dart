@@ -8,7 +8,6 @@ import 'package:quickalert/widgets/quickalert_dialog.dart';
 import '../../../routes/app_pages.dart';
 
 class AdminpageController extends GetxController {
-  //TODO: Implement AdminpageController
 
   final count = 0.obs;
   @override
@@ -16,21 +15,13 @@ class AdminpageController extends GetxController {
     super.onInit();
   }
 
-  void logout() {
-    QuickAlert.show(
-        context: Get.context!,
-        type: QuickAlertType.confirm,
-        title: 'Logout',
-        titleColor: Colors.red,
-        text: 'Yakin ingin logout?',
-        textColor: Colors.black,
-        confirmBtnText: 'Ya',
-        cancelBtnText: 'Tidak',
-        onConfirmBtnTap: () {
-          Get.back();
-          GetStorage().remove(StorageKey.token);
-          Get.offAllNamed(Routes.LOGIN);
-        });
+  void logout() async {
+    // Clear the stored values
+    await StorageProvider.write(StorageKey.status, '');
+    await StorageProvider.write(StorageKey.token, '');
+
+    // Navigate to the login page
+    Get.offAllNamed(Routes.LOGIN);
   }
 
   @override

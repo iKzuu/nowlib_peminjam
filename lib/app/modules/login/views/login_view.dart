@@ -28,14 +28,14 @@ class LoginView extends GetView<LoginController> {
             ),
             const SizedBox(height: 30.0),
             Container(
-              width: 350.0,
+              width: 325.0,
               height: 280.0,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
-                color: Colors.white,
+                color: Colors.white.withOpacity(0.8),
                 border: Border.all(
-                  color: const Color.fromARGB(255, 123, 123, 123),
-                  width: 3.0,
+                  color: Colors.blue,
+                  width: 2.0,
                 ),
                 borderRadius: BorderRadius.circular(30.0)
               ),
@@ -52,12 +52,16 @@ class LoginView extends GetView<LoginController> {
                               controller: controller.usernameController,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.transparent,
+                                fillColor: Colors.white,
                                 labelText: 'Username',
                                 labelStyle: regularFont3,
                                 prefixIcon: const Icon(Icons.person),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  borderSide: const BorderSide(color: Colors.blue),
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
                               ),
@@ -73,13 +77,16 @@ class LoginView extends GetView<LoginController> {
                               obscureText: true,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.transparent,
+                                fillColor: Colors.white,
                                 labelText: 'Password',
                                 labelStyle: regularFont3,
                                 prefixIcon: Icon(Icons.lock),
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    borderSide: BorderSide(color: Colors.black)
+                                    borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  borderSide: const BorderSide(color: Colors.blue),
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
                               ),
@@ -112,16 +119,23 @@ class LoginView extends GetView<LoginController> {
                   )
             ),
 
-            const SizedBox(height: 35.0),
-
-            TextButton(
-              onPressed: () => Get.toNamed(Routes.REGISTER),// Gunakan Get.to untuk navigasi menggunakan GetX
-              child: const Text(
-                'Daftar',
-                style:
-                TextStyle(
-                  color: Colors.white,
-                ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Buat Akun?',
+                    style: regularFont4.copyWith(color: Colors.white),
+                  ),
+                  TextButton(
+                    onPressed: () => Get.offAndToNamed(Routes.REGISTER),// Gunakan Get.to untuk navigasi menggunakan GetX
+                    child: Text(
+                      'Daftar',
+                      style: regularFont4.copyWith(color: Colors.white),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

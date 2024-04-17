@@ -1,6 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../data/provider/storage_provider.dart';
 import '../../../routes/app_pages.dart';
 
 class ProfileController extends GetxController {
@@ -13,8 +18,11 @@ class ProfileController extends GetxController {
   }
 
   void logout() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
+    // Clear the stored values
+    await StorageProvider.write(StorageKey.status, '');
+    await StorageProvider.write(StorageKey.token, '');
+
+    // Navigate to the login page
     Get.offAllNamed(Routes.LOGIN);
   }
 
