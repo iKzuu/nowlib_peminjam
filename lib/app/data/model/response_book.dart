@@ -133,6 +133,7 @@ class Ulasan {
 
 class User {
   User({
+      this.profile, 
       this.namalengkap, 
       this.username, 
       this.alamat, 
@@ -140,12 +141,14 @@ class User {
       this.role,});
 
   User.fromJson(dynamic json) {
+    profile = json['Profile'];
     namalengkap = json['Namalengkap'];
     username = json['Username'];
     alamat = json['Alamat'];
     email = json['Email'];
     role = json['Role'];
   }
+  dynamic profile;
   String? namalengkap;
   String? username;
   String? alamat;
@@ -154,6 +157,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['Profile'] = profile;
     map['Namalengkap'] = namalengkap;
     map['Username'] = username;
     map['Alamat'] = alamat;

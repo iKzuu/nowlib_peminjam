@@ -228,9 +228,22 @@ class DetailBukuView extends GetView<DetailBukuController> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    '${ulasan?.user?.username ?? " "}:',
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                  Row(
+                                    children: [
+                                      ImageIcon(
+                                        AssetImage(''),
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        '${ulasan?.user?.username ?? " "}:',
+                                        style: regularFont3,
+                                      ),
+                                      Text(
+                                        '${ulasan?.tglreview ?? " "}',
+                                        style: regularFont4.copyWith(color: Colors.grey),
+
+                                      ),
+                                    ],
                                   ),
                                   SizedBox(height: 5),
                                   Text(
