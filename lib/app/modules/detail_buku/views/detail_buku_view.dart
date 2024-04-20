@@ -211,69 +211,7 @@ class DetailBukuView extends GetView<DetailBukuController> {
                         style: regularFont4,
                       ),
                       SizedBox(height: 20),
-                      Text(
-                        'Ulasan:',
-                        style: regularFont2,
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: controller.state!.ulasan?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          var ulasan = controller.state!.ulasan?[index];
-                          return Card(
-                            margin: EdgeInsets.symmetric(vertical: 5),
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      ImageIcon(
-                                        AssetImage(''),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        '${ulasan?.user?.username ?? " "}:',
-                                        style: regularFont3,
-                                      ),
-                                      Text(
-                                        '${ulasan?.tglreview ?? " "}',
-                                        style: regularFont4.copyWith(color: Colors.grey),
-
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                    ulasan?.ulasan ?? "",
-                                    style: TextStyle(fontSize: 14),
-                                  ),
-                                  SizedBox(height: 5),
-                                  RatingBar.builder(
-                                    initialRating: ulasan?.rating?.toDouble() ?? 0,
-                                    minRating: 1,
-                                    direction: Axis.horizontal,
-                                    allowHalfRating: true,
-                                    itemCount: 5,
-                                    itemSize: 15,
-                                    itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                                    itemBuilder: (context, _) => Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                    ),
-                                    onRatingUpdate: (rating) {
-                                      // Do nothing
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      SizedBox(height: 50),
+                      //form ulasan
                       Form(
                         key: controller.formKey,
                         child: Padding(
@@ -285,16 +223,6 @@ class DetailBukuView extends GetView<DetailBukuController> {
                                 'Tambah Ulasan:',
                                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                               ),
-                              TextFormField(
-                                controller: controller.ulasanController,
-                                keyboardType: TextInputType.multiline,
-                                maxLines: null,
-                                decoration: InputDecoration(
-                                  hintText: 'Tulis ulasan Anda di sini...',
-                                  border: OutlineInputBorder(),
-                                ),
-                              ),
-                              SizedBox(height: 10),
                               RatingBar.builder(
                                 initialRating: controller.userRating.value,
                                 minRating: 1,
@@ -305,21 +233,127 @@ class DetailBukuView extends GetView<DetailBukuController> {
                                 itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                                 itemBuilder: (context, _) => Icon(
                                   Icons.star,
-                                  color: Colors.amber,
+                                  color: Colors.greenAccent,
                                 ),
                                 onRatingUpdate: (rating) {
                                   controller.userRating.value = rating;
                                 },
                               ),
-                              SizedBox(height: 10),
-                              ElevatedButton(
-                                onPressed: () {
-                                  // Panggil fungsi untuk menambah ulasan
-                                  controller.ulasan();
-                                },
-                                child: Text('Kirim Ulasan'),
+                              TextFormField(
+                                controller: controller.ulasanController,
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null,
+                                decoration: InputDecoration(
+                                  hintText: 'beri ulasan buku...',
+                                  border: UnderlineInputBorder(),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(Icons.send_rounded),
+                                    onPressed: () {
+                                      controller.ulasan();
+                                    },
+                                  ),
+                                ),
                               ),
+                              SizedBox(height: 10),
                             ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+
+                      //ulasan terkirim
+                      Text(
+                        'Ulasan:',
+                        style: regularFont2,
+                      ),
+                      Container(
+                        height: 350,
+                        child: SingleChildScrollView(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: controller.state!.ulasan?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              var ulasan = controller.state!.ulasan?[index];
+                              return Card(
+                                margin: EdgeInsets.symmetric(vertical: 5),
+                                child: Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: 35,
+                                            height: 35,
+                                            decoration: BoxDecoration(
+                                              image: ulasan!.user?.profile != null ?
+                                              DecorationImage(
+                                                image: NetworkImage(ulasan.user?.profile),
+                                              ) : null,
+                                            ),
+                                            child: Center(
+                                              child: ulasan.user?.profile == null ?
+                                              Image.asset(
+                                                "assets/profile/profile.png",
+                                              ) : null,
+                                            ),
+                                            // Image.network(
+                                            //   ulasan!.user?.profile ?? "https://www.flaticon.com/free-icons/user"
+                                            // ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Text(
+                                            '${ulasan.user?.username ?? " "}',
+                                            style: regularFont3.copyWith(fontWeight: semiBold),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 5),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 10),
+                                        child: Text(
+                                          ulasan.ulasan ?? "",
+                                          style: regularFont3,
+                                        ),
+                                      ),
+                                      SizedBox(height: 5),
+                                      Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 8.0),
+                                            child: RatingBar.builder(
+                                              initialRating: ulasan.rating?.toDouble() ?? 0,
+                                              minRating: 1,
+                                              direction: Axis.horizontal,
+                                              allowHalfRating: true,
+                                              itemCount: 5,
+                                              itemSize: 15,
+                                              itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                                              itemBuilder: (context, _) => Icon(
+                                                Icons.star,
+                                                color: Colors.greenAccent,
+                                              ),
+                                              onRatingUpdate: (rating) {
+                                                // Do nothing
+                                              },
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 145),
+                                            child: Text(
+                                              '${ulasan.tglreview ?? " "}',
+                                              style: regularFont4.copyWith(color: Colors.grey),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ),
