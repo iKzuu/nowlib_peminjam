@@ -20,4 +20,10 @@ class Endpoint {
   static const String addkol = "${baseUrlApi}koleksi";
   static const String getkol = "${baseUrlApi}koleksi/daftarkol";
   static const String deletekol = "${baseUrlApi}koleksi";
+
+  //ulasan buku
+  static const String ulasan = "${baseUrlApi}ulasan";
+
+  //tambah buku
+  static const String addbook = "${baseUrlApi}buku";
 }

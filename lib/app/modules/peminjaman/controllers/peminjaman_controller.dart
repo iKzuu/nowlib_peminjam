@@ -17,6 +17,11 @@ class PeminjamanController extends GetxController with StateMixin<List<DataRiway
     getData();
   }
 
+  Future<void> refreshData() async {
+    change(null, status: RxStatus.loading());
+    await getData();
+  }
+
   // void changePage(int index) {
   //   selectedIndex = index;
   //   update();

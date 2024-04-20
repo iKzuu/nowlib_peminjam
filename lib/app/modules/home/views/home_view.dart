@@ -69,8 +69,8 @@ class HomeView extends GetView<HomeController> {
             SizedBox(height: 10),
 
             Container(
-              height: 250,
-              width: 400,
+              height: 230,
+              width: 370,
               decoration: BoxDecoration(
                 color: Colors.blue,
                 // Warna latar belakang sementara gambar tidak ada
@@ -83,17 +83,17 @@ class HomeView extends GetView<HomeController> {
                   Image.asset(
                     'assets/image/ramadhankareem.jpg',
                     fit: BoxFit.fitWidth,
-                    width: 380,
+                    width: 361,
                   ),
                   Image.asset(
                     'assets/giff/bgktg.gif',
                     fit: BoxFit.fitWidth,
-                    width: 380,
+                    width: 361,
                   ),
                   Image.asset(
                     'assets/image/kareem.jpg',
                     fit: BoxFit.fitWidth,
-                    width: 380,
+                    width: 361,
                   ),
                   // Tambahkan gambar-gambar GIF lainnya di sini
                 ],
@@ -133,9 +133,8 @@ class HomeView extends GetView<HomeController> {
                               onTap: () {
                                 Get.toNamed(Routes.DETAIL_BUKU,
                                     parameters: {
-                                      'id': state[index].kategorirelasiID.toString(),
-                                      'judul': state[index].buku?.judul
-                                          .toString() ?? '',
+                                      'id': state[index].buku?.bookID.toString() ?? '',
+                                      'judul': state[index].buku?.judul.toString() ?? '',
                                     }
                                 );
                               },
@@ -211,9 +210,8 @@ class HomeView extends GetView<HomeController> {
                               onTap: () {
                                 Get.toNamed(Routes.DETAIL_BUKU,
                                     parameters: {
-                                      'id': state[index].kategorirelasiID.toString(),
-                                      'judul': state[index].buku?.judul
-                                          .toString() ?? '',
+                                      'id': state[index].buku?.bookID.toString() ?? '',
+                                      'judul': state[index].buku?.judul.toString() ?? '',
                                     }
                                 );
                               },
