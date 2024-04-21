@@ -11,6 +11,7 @@ class HomeController extends GetxController with StateMixin<List<DataRelasi>> {
   final RxInt count = 0.obs;
   TextEditingController searchController = TextEditingController();
   List<DataRelasi>? bookList;
+  final imageBase64 = " ".obs;
 
   @override
   void onInit() {
@@ -67,7 +68,6 @@ class HomeController extends GetxController with StateMixin<List<DataRelasi>> {
       change(null, status: RxStatus.error(e.toString()));
     }
   }
-
 
   // Future<void> getData () async {
   //   change(null, status: RxStatus.loading());

@@ -8,6 +8,7 @@ import 'package:nowlib_peminjam/app/routes/app_pages.dart';
 import 'package:nowlib_peminjam/themes.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
+import '../../../others/imagememory/image_memory.dart';
 import '../controllers/detail_buku_controller.dart';
 
 class DetailBukuView extends GetView<DetailBukuController> {
@@ -41,21 +42,11 @@ class DetailBukuView extends GetView<DetailBukuController> {
                           Container(
                             width: 120,
                             height: 180,
-                            decoration: BoxDecoration(
-                              image: state!.gambar != null
-                                  ? DecorationImage(
-                                      image: NetworkImage(state.gambar!),
-                                      fit: BoxFit.cover,
-                                    )
-                                  : null,
-                            ),
-                            child: Center(
-                              child: state.gambar == null
-                                  ? Text(
-                                      "No Cover",
-                                      style: regularFont2,
-                                    )
-                                  : null,
+                            child: FittedBox(
+                              fit: BoxFit.fill,
+                              child: state!.gambar?.isEmpty ?? true
+                                  ? Text("No cover")
+                                  : Image(image: base64Image(state!.gambar!)),
                             ),
                           )
                         ],
@@ -287,17 +278,11 @@ class DetailBukuView extends GetView<DetailBukuController> {
                                           Container(
                                             width: 35,
                                             height: 35,
-                                            decoration: BoxDecoration(
-                                              image: ulasan!.user?.profile != null ?
-                                              DecorationImage(
-                                                image: NetworkImage(ulasan.user?.profile),
-                                              ) : null,
-                                            ),
-                                            child: Center(
-                                              child: ulasan.user?.profile == null ?
-                                              Image.asset(
-                                                "assets/profile/profile.png",
-                                              ) : null,
+                                            child: FittedBox(
+                                              fit: BoxFit.fill,
+                                              child: state.gambar?.isEmpty ?? true
+                                                  ? Image.asset("assets/profile/profile.png")
+                                                  : Image(image: base64Image(state.gambar!)),
                                             ),
                                             // Image.network(
                                             //   ulasan!.user?.profile ?? "https://www.flaticon.com/free-icons/user"
@@ -305,7 +290,7 @@ class DetailBukuView extends GetView<DetailBukuController> {
                                           ),
                                           SizedBox(width: 10),
                                           Text(
-                                            '${ulasan.user?.username ?? " "}',
+                                            '${ulasan?.user?.username ?? " "}',
                                             style: regularFont3.copyWith(fontWeight: semiBold),
                                           ),
                                         ],
@@ -314,7 +299,7 @@ class DetailBukuView extends GetView<DetailBukuController> {
                                       Padding(
                                         padding: const EdgeInsets.only(left: 10),
                                         child: Text(
-                                          ulasan.ulasan ?? "",
+                                          ulasan?.ulasan ?? "",
                                           style: regularFont3,
                                         ),
                                       ),
@@ -324,7 +309,7 @@ class DetailBukuView extends GetView<DetailBukuController> {
                                           Padding(
                                             padding: const EdgeInsets.only(left: 8.0),
                                             child: RatingBar.builder(
-                                              initialRating: ulasan.rating?.toDouble() ?? 0,
+                                              initialRating: ulasan?.rating?.toDouble() ?? 0,
                                               minRating: 1,
                                               direction: Axis.horizontal,
                                               allowHalfRating: true,
@@ -343,7 +328,7 @@ class DetailBukuView extends GetView<DetailBukuController> {
                                           Padding(
                                             padding: const EdgeInsets.only(left: 145),
                                             child: Text(
-                                              '${ulasan.tglreview ?? " "}',
+                                              '${ulasan?.tglreview ?? " "}',
                                               style: regularFont4.copyWith(color: Colors.grey),
                                             ),
                                           ),

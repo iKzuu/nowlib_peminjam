@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:nowlib_peminjam/themes.dart';
+import '../../../others/imagememory/image_memory.dart';
 import '../controllers/meminjamn_controller.dart';
 
 class MeminjamnView extends GetView<MeminjamnController> {
@@ -51,18 +52,11 @@ class MeminjamnView extends GetView<MeminjamnController> {
                                       Container(
                                         width: 100,
                                         height: 150,
-                                        decoration: BoxDecoration(
-                                          image: state!.gambar != null
-                                              ? DecorationImage(
-                                            image: NetworkImage(state.gambar!),
-                                            fit: BoxFit.cover,
-                                          ) : null,
-                                        ),
-                                        child: Center(
-                                          child: state.gambar == null ? Text(
-                                            "No Cover",
-                                            style: regularFont2,
-                                          ) : null,
+                                        child: FittedBox(
+                                          fit: BoxFit.fill,
+                                          child: state?.gambar?.isEmpty ?? true
+                                              ? Text("No cover")
+                                              : Image(image: base64Image(state!.gambar!)),
                                         ),
                                       )
                                     ],
@@ -76,17 +70,17 @@ class MeminjamnView extends GetView<MeminjamnController> {
                                   children: [
                                     SizedBox(height: 35),
                                     Text(
-                                      state.judul ?? '',
+                                      state?.judul ?? '',
                                       style: regularFont3,
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      state.penulis ?? '',
+                                      state?.penulis ?? '',
                                       style: regularFont4,
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      state.penerbit ?? '',
+                                      state?.penerbit ?? '',
                                       style: regularFont4,
                                     ),
                                     SizedBox(height: 52),

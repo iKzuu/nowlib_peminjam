@@ -20,6 +20,9 @@ dependencies:
   flutter_native_splash: ^2.4.0
   quickalert: ^1.1.0
   image_picker: ^1.1.0
+  open_file: ^3.3.2
+  file_picker: ^8.0.1
+  fluttertoast: ^8.2.5
   flutter: 
     sdk: flutter
   google_fonts: ^6.2.1

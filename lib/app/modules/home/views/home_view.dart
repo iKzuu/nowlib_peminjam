@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -6,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
+import 'package:nowlib_peminjam/app/others/imagememory/image_memory.dart';
 import 'package:nowlib_peminjam/themes.dart';
 
 import '../../../routes/app_pages.dart';
@@ -67,7 +71,6 @@ class HomeView extends GetView<HomeController> {
         child: Column(
           children: [
             SizedBox(height: 10),
-
             Container(
               height: 230,
               width: 370,
@@ -101,13 +104,12 @@ class HomeView extends GetView<HomeController> {
                   autoPlay: true, // Untuk mengaktifkan otomatis berputar
                   aspectRatio: 16 / 9, // Sesuaikan dengan rasio gambar Anda
                   viewportFraction: 1, // Menampilkan satu gambar per tampilan
-                  enlargeCenterPage: true, // Memperbesar gambar yang sedang ditampilkan
+                  enlargeCenterPage:
+                      true, // Memperbesar gambar yang sedang ditampilkan
                 ),
               ),
             ),
-
             SizedBox(height: 20),
-
             Row(
               children: [
                 Container(
@@ -119,72 +121,75 @@ class HomeView extends GetView<HomeController> {
                 )
               ],
             ),
-
             Container(
               height: 240,
               child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: controller.obx((state) =>
-                      ListView.builder(
-                          itemCount: state?.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                Get.toNamed(Routes.DETAIL_BUKU,
-                                    parameters: {
-                                      'id': state[index].buku?.bookID.toString() ?? '',
-                                      'judul': state[index].buku?.judul.toString() ?? '',
-                                    }
-                                );
-                              },
-                              child: Container(
-                                width: 125,
-                                height: 100,
-                                margin: const EdgeInsets.only(right: 10),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: 100,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        image: state![index].buku?.gambar !=
-                                            null
-                                            ? DecorationImage(
-                                          image: NetworkImage(
-                                              state[index].buku?.gambar!),
-                                          fit: BoxFit.cover,
-                                        ) : null,
-                                      ),
-                                      child: Center(
-                                        child: state[index].buku?.gambar == null
-                                            ? Text('No Image',
-                                          style: regularFont3,
-                                        ) : null,
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Flexible(
-                                      child: AutoSizeText(
-                                        state[index].buku?.judul ?? '',
-                                        style: regularFont2.copyWith(
-                                            color: Colors.black),
-                                        textAlign: TextAlign.center,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    )
-                                  ],
+                  child: controller.obx((state) => ListView.builder(
+                      itemCount: state?.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Get.toNamed(Routes.DETAIL_BUKU, parameters: {
+                              'id': state?[index].buku?.bookID.toString() ?? '',
+                              'judul':
+                                  state?[index].buku?.judul.toString() ?? '',
+                            });
+                          },
+                          child: Container(
+                            width: 125,
+                            height: 100,
+                            margin: const EdgeInsets.only(right: 10),
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(top: 10),
+                                  width: 100,
+                                  height: 150,
+                                  child: FittedBox(
+                                    fit: BoxFit.fill,
+                                    child: state?[index].buku?.gambar.isEmpty
+                                        ? Text("No cover")
+                                        : Image(image: base64Image(state?[index].buku?.gambar)),
+                                  ),
                                 ),
-                              ),
-                            );
-                          }))),
+                                // child: state![index].buku?.gambar != null
+                                //     ? state[index]
+                                //             .buku
+                                //             ?.gambar
+                                //             .startsWith('http')
+                                //         ? Image.network(
+                                //             state[index].buku?.gambar ?? '',
+                                //             fit: BoxFit.cover,
+                                //           )
+                                //         : Image.memory(
+                                //             base64Image(
+                                //               state[index].buku?.gambar ?? '',
+                                //             ) as Uint8List,
+                                //             fit: BoxFit.cover,
+                                //           )
+                                //     : Text('No Cover'),
+                                SizedBox(height: 10),
+                                Flexible(
+                                  child: AutoSizeText(
+                                    state?[index].buku?.judul ?? '',
+                                    style: regularFont2.copyWith(
+                                        color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }))),
             ),
-
             SizedBox(
               height: 10,
             ),
-
             Row(
               children: [
                 Container(
@@ -196,68 +201,55 @@ class HomeView extends GetView<HomeController> {
                 )
               ],
             ),
-
             Container(
               height: 240,
               child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: controller.obx((state) =>
-                      ListView.builder(
-                          itemCount: state?.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                Get.toNamed(Routes.DETAIL_BUKU,
-                                    parameters: {
-                                      'id': state[index].buku?.bookID.toString() ?? '',
-                                      'judul': state[index].buku?.judul.toString() ?? '',
-                                    }
-                                );
-                              },
-                              child: Container(
-                                width: 125,
-                                height: 100,
-                                margin: const EdgeInsets.only(right: 10),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(top: 10),
-                                      width: 100,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        image: state![index].buku?.gambar !=
-                                            null
-                                            ? DecorationImage(
-                                          image: NetworkImage(
-                                              state[index].buku?.gambar!),
-                                          fit: BoxFit.cover,
-                                        ) : null,
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Center(
-                                        child: state[index].buku?.gambar == null
-                                            ? Text('No Image',
-                                          style: regularFont3,
-                                        ) : null,
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Flexible(
-                                      child: AutoSizeText(
-                                        state[index].buku?.judul ?? '',
-                                        style: regularFont2.copyWith(
-                                            color: Colors.black),
-                                        textAlign: TextAlign.center,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    )
-                                  ],
+                  child: controller.obx((state) => ListView.builder(
+                      itemCount: state?.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Get.toNamed(Routes.DETAIL_BUKU, parameters: {
+                              'id': state?[index].buku?.bookID.toString() ?? '',
+                              'judul':
+                                  state?[index].buku?.judul.toString() ?? '',
+                            });
+                          },
+                          child: Container(
+                            width: 125,
+                            height: 100,
+                            margin: const EdgeInsets.only(right: 10),
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(top: 10),
+                                  width: 100,
+                                  height: 150,
+                                  child: FittedBox(
+                                    fit: BoxFit.fill,
+                                    child: state?[index].buku?.gambar.isEmpty
+                                        ? Text("No cover")
+                                        : Image(image: base64Image(state?[index].buku?.gambar)),
+                                  ),
                                 ),
-                              ),
-                            );
-                          }))),
+                                SizedBox(height: 10),
+                                Flexible(
+                                  child: AutoSizeText(
+                                    state?[index].buku?.judul ?? '',
+                                    style: regularFont2.copyWith(
+                                        color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }))),
             ),
           ],
         ),
