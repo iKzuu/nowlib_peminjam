@@ -1,18 +1,24 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nowlib_peminjam/app/data/model/response_koleksi.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 import '../../../data/constant/endpoint.dart';
 import '../../../data/model/response_collection.dart';
 import '../../../data/provider/api_provider.dart';
+import '../../../data/provider/jwt_convert.dart';
 import '../../../data/provider/storage_provider.dart';
 
-class KoleksiController extends GetxController with StateMixin<List<DataCollection>>{
-
+class KoleksiController extends GetxController with StateMixin<List<DataCollection>> {
+  // final token = StorageProvider.read(StorageKey.token);
   final loading = false.obs;
   final count = 0.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -25,23 +31,40 @@ class KoleksiController extends GetxController with StateMixin<List<DataCollecti
   }
 
   delete(int? koleksiID) async {
-    loading(true);
     try {
-      final response = await ApiProvider.instance().delete('${Endpoint.deletekol}?id=$koleksiID');
-      if (response.statusCode == 200) {
-        Get.snackbar("Selamat", "Berhasil menghapus koleksi", backgroundColor: Colors.greenAccent);
-      } else {
-        Get.snackbar("Sorry", "Gagal menghapus koleksi", backgroundColor: Colors.orange);
-      }
-    } on DioException catch (e) {
-      loading(false);
-      if (e.response != null) {
-        if (e.response?.data != null) {
-          Get.snackbar("Sorry", "${e.response?.data['message']}", backgroundColor: Colors.orange);
+      final response = await ApiProvider.instance().delete(Endpoint.deletekol,
+          queryParameters: {'id' : koleksiID}
+      );
+      QuickAlert.show(
+        context: Get.context!,
+        type: QuickAlertType.confirm,
+        title: 'Hapus Buku?',
+        confirmBtnText: 'Ya',
+        cancelBtnText: 'Tidak',
+        onConfirmBtnTap: () {
+          Get.back();
+          if (response.statusCode == 200) {
+            getData();
+            QuickAlert.show(
+              context: Get.context!,
+              type: QuickAlertType.success,
+              confirmBtnText: 'Ok',
+              title: 'Berhasil',
+              text: 'Berhasil Menghapus Koleksi',
+              titleColor: Colors.green,
+            );
+          } else {
+            QuickAlert.show(
+              context: Get.context!,
+              type: QuickAlertType.error,
+              confirmBtnText: 'Ok',
+              title: 'Gagal',
+              text: 'Gagal Menghapus Koleksi',
+              titleColor: Colors.red,
+            );
+          }
         }
-      } else {
-        Get.snackbar("Sorry", e.message ?? "", backgroundColor: Colors.red);
-      }
+      );
     } catch (e) {
       loading(false);
       Get.snackbar("Error", e.toString(), backgroundColor: Colors.red);
@@ -51,29 +74,24 @@ class KoleksiController extends GetxController with StateMixin<List<DataCollecti
   getData() async {
     change(null, status: RxStatus.loading());
     try {
-      final response = await ApiProvider.instance()
-          .get("${Endpoint.getkol}/?userId=${StorageProvider.read(StorageKey.idUser)}");
-      if (response.statusCode == 201) { // Change status code to 200
+      // final decodedToken = await JwtConverter.jwtDecode(token);
+      // final iduser = decodedToken["id"].toString();
+      final response = await ApiProvider.instance().get(Endpoint.getkol,
+          queryParameters: {'userId': StorageProvider.read(StorageKey.idUser)});
+      if (response.statusCode == 201) {
         final ResponseCollection responseCollection =
-        ResponseCollection.fromJson(response.data);
-        if (responseCollection.data!.isEmpty) {
+            ResponseCollection.fromJson(response.data);
+        if (responseCollection.data == null ||
+            responseCollection.data!.isEmpty) {
           change(null, status: RxStatus.empty());
         } else {
           change(responseCollection.data, status: RxStatus.success());
         }
       } else {
-        change(null, status: RxStatus.error("${response.data['message']}"));
-      }
-    } on dio.DioError catch (e) { // Change to DioError
-      if (e.response != null) {
-        if (e.response?.data != null) {
-          change(null, status: RxStatus.error("${e.response?.data['message']}"));
-        }
-      } else {
-        change(null, status: RxStatus.error(e.message ?? ""));
+        change(null, status: RxStatus.empty());
       }
     } catch (e) {
-      change(null, status: RxStatus.error(e.toString()));
+      log(e.toString());
     }
   }
 

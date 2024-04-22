@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../themes.dart';
+import '../../../others/imagememory/image_memory.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/koleksi_controller.dart';
 
@@ -54,18 +55,11 @@ class KoleksiView extends GetView<KoleksiController> {
                       Container(
                         width: 100,
                         height: 150,
-                        decoration: BoxDecoration(
-                          image: state[index].buku?.gambar != null
-                              ? DecorationImage(
-                            image: NetworkImage(state[index].buku!.gambar!),
-                            fit: BoxFit.cover,
-                          ) : null,
-                        ),
-                        child: Center(
-                          child: state![index].buku?.gambar == null
-                              ? Text('no cover',
-                            style: regularFont3,
-                          ) : null,
+                        child: FittedBox(
+                          fit: BoxFit.fill,
+                          child: state[index].buku?.gambar?.isEmpty ?? true
+                              ? Text("No cover")
+                              : Image(image: base64Image(state[index].buku!.gambar!)),
                         ),
                       ),
                       SizedBox(width: 20),

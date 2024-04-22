@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart' as dio;
 import 'package:get/get.dart';
 
@@ -41,8 +43,9 @@ class PeminjamanController extends GetxController with StateMixin<List<DataRiway
   getData() async {
     change(null, status: RxStatus.loading());
     try {
-      final response = await ApiProvider.instance()
-          .get("${Endpoint.pinjam}/?userId=${StorageProvider.read(StorageKey.idUser)}");
+      final response = await ApiProvider.instance().get(Endpoint.peminjaman,
+          queryParameters: {'userId' : StorageProvider.read(StorageKey.idUser)
+      });
       if (response.statusCode == 201) { // Change status code to 200
         final ResponseRiwayat responseRiwayat =
         ResponseRiwayat.fromJson(response.data);
@@ -52,18 +55,10 @@ class PeminjamanController extends GetxController with StateMixin<List<DataRiway
           change(responseRiwayat.data, status: RxStatus.success());
         }
       } else {
-        change(null, status: RxStatus.error("${response.data['message']}"));
-      }
-    } on dio.DioError catch (e) { // Change to DioError
-      if (e.response != null) {
-        if (e.response?.data != null) {
-          change(null, status: RxStatus.error("${e.response?.data['message']}"));
-        }
-      } else {
-        change(null, status: RxStatus.error(e.message ?? ""));
+        change(null, status: RxStatus.empty());
       }
     } catch (e) {
-      change(null, status: RxStatus.error(e.toString()));
+      log(e.toString());
     }
   }
 

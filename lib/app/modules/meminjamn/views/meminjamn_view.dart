@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -11,9 +13,9 @@ class MeminjamnView extends GetView<MeminjamnController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-        title: Text(
+          title: Text(
           'Meminjaman Buku ${Get.parameters['judul'].toString()}',
-          style: regularFont,
+          style: regularFont3,
         ),
         centerTitle: true,
         backgroundColor: Colors.blue,
@@ -24,7 +26,9 @@ class MeminjamnView extends GetView<MeminjamnController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+
               const SizedBox(height: 30.0),
+
               Container(
                   width: 350.0,
                   height: 450.0,
@@ -37,8 +41,8 @@ class MeminjamnView extends GetView<MeminjamnController> {
                       ),
                       borderRadius: BorderRadius.circular(30.0)
                   ),
-                  child:
-                  controller.obx((state) =>
+
+                  child: controller.obx((state) =>
                       SingleChildScrollView(
                         child: Column(
                           children: [
@@ -62,57 +66,42 @@ class MeminjamnView extends GetView<MeminjamnController> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(height: 35),
-                                    Text(
-                                      state?.judul ?? '',
-                                      style: regularFont3,
-                                    ),
-                                    SizedBox(height: 5),
-                                    Text(
-                                      state?.penulis ?? '',
-                                      style: regularFont4,
-                                    ),
-                                    SizedBox(height: 5),
-                                    Text(
-                                      state?.penerbit ?? '',
-                                      style: regularFont4,
-                                    ),
-                                    SizedBox(height: 52),
-                                  ],
+
+                                const SizedBox(width: 20),
+
+                                Flexible(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(height: 35),
+                                      AutoSizeText(
+                                        state?.judul ?? '',
+                                        style: regularFont3,
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        state?.penulis ?? '',
+                                        style: regularFont4,
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        state?.penerbit ?? '',
+                                        style: regularFont4,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
+
+                            const SizedBox(height: 52),
+
                             Form(
                               key: controller.formKey,
                               child:
                               Column(
                                 children: [
                                   const SizedBox(height: 60.0),
-                                  // ConstrainedBox(
-                                  //   constraints: const BoxConstraints(maxWidth: 250.0),
-                                  //   child: TextFormField(
-                                  //     controller: controller.tglPinjamController,
-                                  //     decoration: InputDecoration(
-                                  //       filled: true,
-                                  //       fillColor: Colors.transparent,
-                                  //       labelText: 'Tanggal Peminjaman',
-                                  //       labelStyle: regularFont3,
-                                  //       prefixIcon: const Icon(Icons.person),
-                                  //       border: OutlineInputBorder(
-                                  //         borderRadius: BorderRadius.circular(20.0),
-                                  //       ),
-                                  //       contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
-                                  //     ),
-                                  //   ),
-                                  // ),
-                        
-                                  // const SizedBox(height: 15.0),
                                   ConstrainedBox(
                                     constraints: BoxConstraints(maxWidth: 250.0),
                                     child: TextFormField(

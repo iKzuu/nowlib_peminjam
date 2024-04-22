@@ -73,7 +73,25 @@ class DetailBukuView extends GetView<DetailBukuController> {
                               state.penerbit ?? '',
                               style: regularFont2,
                             ),
-                            SizedBox(height: 52),
+                            SizedBox(height: 10),
+                            RatingBar.builder(
+                              initialRating: state.ulasan?.isNotEmpty == true ? state.ulasan!.first.rating!.toDouble() : 0.0,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemSize: 25,
+                              itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: Colors.greenAccent,
+                              ),
+                              onRatingUpdate: (rating) {
+                                print(rating);
+                              },
+                              ignoreGestures: true,
+                            ),
+                            SizedBox(height: 20),
                             Row(
                               children: [
                                 ElevatedButton(
@@ -104,16 +122,9 @@ class DetailBukuView extends GetView<DetailBukuController> {
                                     style: regularFont3,
                                   ),
                                   style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(Colors
-                                            .blueAccent), // Ubah warna latar belakang
-                                    foregroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Colors.white), // Ubah warna teks
-                                    minimumSize:
-                                        MaterialStateProperty.all<Size>(Size(
-                                            93.0,
-                                            40.0)), // Mengatur tinggi minimum
+                                    backgroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent), // Ubah warna latar belakang
+                                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Ubah warna teks
+                                    minimumSize: MaterialStateProperty.all<Size>(Size(93.0, 40.0)), // Mengatur tinggi minimum
                                     shape: MaterialStateProperty.all<
                                         RoundedRectangleBorder>(
                                       RoundedRectangleBorder(
@@ -125,18 +136,30 @@ class DetailBukuView extends GetView<DetailBukuController> {
                                 ),
                                 SizedBox(width: 20),
                                 IconButton(
-                                  // key: controller.formKey,
-                                  onPressed: () {
-                                    String? id = Get.parameters['id'];
-                                    if (id != null) {
-                                      controller.post(int.parse(id));
-                                    }
-                                  },
-                                  icon: Icon(
-                                    Icons.bookmark_border_outlined,
-                                    size: 35,
-                                  ),
-                                ),
+                                    padding:
+                                    const EdgeInsets.all(10),
+                                    color: Colors.white,
+                                    style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlueAccent),
+                                    onPressed: () {
+                                      String? id = Get.parameters['id'];
+                                      if (id != null) {
+                                        controller.post(int.parse(id));
+                                      }
+                                    },
+                                    icon: const Icon(Icons.bookmark_add))
+                                // IconButton(
+                                //   // key: controller.formKey,
+                                //   onPressed: () {
+                                //     String? id = Get.parameters['id'];
+                                //     if (id != null) {
+                                //       controller.post(int.parse(id));
+                                //     }
+                                //   },
+                                //   icon: Icon(
+                                //     Icons.bookmark_border_outlined,
+                                //     size: 35,
+                                //   ),
+                                // ),
                               ],
                             ),
                           ],
@@ -144,21 +167,16 @@ class DetailBukuView extends GetView<DetailBukuController> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 25),
+                  SizedBox(height: 20),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          Container(
-                            height: 40,
-                            width: 90,
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
+                          Card(
+                            color: Colors.greenAccent,
                             child: Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 textAlign: TextAlign.center,
                                 state.kategoribukurelasi?.first.genre?.namagenre ?? '',
@@ -167,21 +185,14 @@ class DetailBukuView extends GetView<DetailBukuController> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 20),
-                          Container(
-                            height: 40,
-                            width: 90,
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
+                          SizedBox(width: 10),
+                          Card(
+                            color: Colors.greenAccent,
                             child: Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 textAlign: TextAlign.center,
-                                state.kategoribukurelasi?.first.kategoribuku
-                                        ?.namaKategori ??
-                                    '',
+                                state.kategoribukurelasi?.first.kategoribuku?.namaKategori ?? '',
                                 style:
                                     regularFont2.copyWith(color: Colors.white),
                               ),
@@ -220,9 +231,9 @@ class DetailBukuView extends GetView<DetailBukuController> {
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
                                 itemCount: 5,
-                                itemSize: 30,
-                                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                                itemBuilder: (context, _) => Icon(
+                                itemSize: 25,
+                                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                itemBuilder: (context, _) => const Icon(
                                   Icons.star,
                                   color: Colors.greenAccent,
                                 ),
@@ -280,13 +291,10 @@ class DetailBukuView extends GetView<DetailBukuController> {
                                             height: 35,
                                             child: FittedBox(
                                               fit: BoxFit.fill,
-                                              child: state.gambar?.isEmpty ?? true
-                                                  ? Image.asset("assets/profile/profile.png")
-                                                  : Image(image: base64Image(state.gambar!)),
+                                              child: ulasan?.user?.profile != null
+                                                  ? Image(image: base64Image(ulasan?.user?.profile!))
+                                                  : Image.asset("assets/profile/profile.png")
                                             ),
-                                            // Image.network(
-                                            //   ulasan!.user?.profile ?? "https://www.flaticon.com/free-icons/user"
-                                            // ),
                                           ),
                                           SizedBox(width: 10),
                                           Text(

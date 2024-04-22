@@ -11,6 +11,7 @@ import '../../../data/provider/api_provider.dart';
 import '../../../data/provider/storage_provider.dart';
 
 class DetailBukuController extends GetxController with StateMixin<DataBook>{
+
   final loading = false.obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isBookmarked = false;
@@ -19,6 +20,8 @@ class DetailBukuController extends GetxController with StateMixin<DataBook>{
   final reviewController = TextEditingController();
   final userRating = 0.0.obs;
   final id = Get.parameters['id'];
+  // final rating = 0.0.obs;
+  // double lastRating = 0.0;
 
   final count = 0.obs;
   @override
@@ -27,6 +30,13 @@ class DetailBukuController extends GetxController with StateMixin<DataBook>{
     getData(id);
     // getDataDetailBuku(id);
   }
+
+  // void setRating(double newRating) {
+  //   if (newRating != lastRating) { // Check if the new rating is different from the last rating
+  //     rating.value = newRating;
+  //     lastRating = newRating; // Update the last rating
+  //   }
+  // }
 
   @override
   void onReady() {
@@ -124,39 +134,39 @@ class DetailBukuController extends GetxController with StateMixin<DataBook>{
 
   //==========================================delete koleksi=================================================
 
-  delete(int id) async {
-    loading(true);
-    try {
-      final response = await ApiProvider.instance().delete('${Endpoint.deletekol}?id=$id');
-      if (response.statusCode == 200) {
-        Get.snackbar("Selamat", "Berhasil menghapus koleksi", backgroundColor: Colors.blue);
-        // Ubah status bookmark menjadi outline
-        isBookmarked = false;
-      } else {
-        Get.snackbar("Sorry", "Gagal menghapus koleksi", backgroundColor: Colors.orange);
-      }
-    } on DioException catch (e) {
-      loading(false);
-      if (e.response != null) {
-        if (e.response?.data != null) {
-          Get.snackbar("Sorry", "${e.response?.data['message']}", backgroundColor: Colors.orange);
-        }
-      } else {
-        Get.snackbar("Sorry", e.message ?? "", backgroundColor: Colors.red);
-      }
-    } catch (e) {
-      loading(false);
-      Get.snackbar("Error", e.toString(), backgroundColor: Colors.red);
-    }
-  }
+  // delete(int id) async {
+  //   loading(true);
+  //   try {
+  //     final response = await ApiProvider.instance().delete('${Endpoint.deletekol}?id=$id');
+  //     if (response.statusCode == 200) {
+  //       Get.snackbar("Selamat", "Berhasil menghapus koleksi", backgroundColor: Colors.blue);
+  //       // Ubah status bookmark menjadi outline
+  //       isBookmarked = false;
+  //     } else {
+  //       Get.snackbar("Sorry", "Gagal menghapus koleksi", backgroundColor: Colors.orange);
+  //     }
+  //   } on DioException catch (e) {
+  //     loading(false);
+  //     if (e.response != null) {
+  //       if (e.response?.data != null) {
+  //         Get.snackbar("Sorry", "${e.response?.data['message']}", backgroundColor: Colors.orange);
+  //       }
+  //     } else {
+  //       Get.snackbar("Sorry", e.message ?? "", backgroundColor: Colors.red);
+  //     }
+  //   } catch (e) {
+  //     loading(false);
+  //     Get.snackbar("Error", e.toString(), backgroundColor: Colors.red);
+  //   }
+  // }
 
   //==========================================get data detail buku=============================================
 
   Future<void> getData (String? idBuku) async {
     change(null, status: RxStatus.loading());
-    // var idBuku = Get.parameters['id'];
     try {
-      final response = await ApiProvider.instance().get("${Endpoint.buku}?id=$idBuku");
+      final response = await ApiProvider.instance().get(Endpoint.buku,
+          queryParameters: {'id' : idBuku});
       if (response.statusCode == 200) {
         final ResponseBook responseBook = ResponseBook.fromJson(response.data);
         if(responseBook.data == null) {
@@ -212,34 +222,34 @@ class DetailBukuController extends GetxController with StateMixin<DataBook>{
   //   }
   // }
 
-  Future<void> addReview() async {
-    try {
-      final review = reviewController.text.trim();
-      final rating = userRating.value;
-
-      // Validasi ulasan dan rating sebelum mengirim
-      if (review.isEmpty) {
-        Get.snackbar('Error', 'Ulasan tidak boleh kosong',
-            snackPosition: SnackPosition.BOTTOM);
-        return;
-      }
-
-      // Lakukan penanganan untuk mengirim ulasan ke server
-      // Misalnya, Anda bisa menggunakan API post untuk mengirim ulasan
-
-      // Setelah berhasil mengirim ulasan, reset nilai inputan dan rating
-      reviewController.text = '';
-      userRating.value = 0.0;
-
-      // Beritahu pengguna bahwa ulasan telah berhasil ditambahkan
-      Get.snackbar('Success', 'Ulasan berhasil ditambahkan',
-          snackPosition: SnackPosition.BOTTOM);
-    } catch (e) {
-      // Tangani kesalahan jika gagal menambah ulasan
-      Get.snackbar('Error', 'Gagal menambah ulasan: $e',
-          snackPosition: SnackPosition.BOTTOM);
-    }
-  }
+  // Future<void> addReview() async {
+  //   try {
+  //     final review = reviewController.text.trim();
+  //     final rating = userRating.value;
+  //
+  //     // Validasi ulasan dan rating sebelum mengirim
+  //     if (review.isEmpty) {
+  //       Get.snackbar('Error', 'Ulasan tidak boleh kosong',
+  //           snackPosition: SnackPosition.BOTTOM);
+  //       return;
+  //     }
+  //
+  //     // Lakukan penanganan untuk mengirim ulasan ke server
+  //     // Misalnya, Anda bisa menggunakan API post untuk mengirim ulasan
+  //
+  //     // Setelah berhasil mengirim ulasan, reset nilai inputan dan rating
+  //     reviewController.text = '';
+  //     userRating.value = 0.0;
+  //
+  //     // Beritahu pengguna bahwa ulasan telah berhasil ditambahkan
+  //     Get.snackbar('Success', 'Ulasan berhasil ditambahkan',
+  //         snackPosition: SnackPosition.BOTTOM);
+  //   } catch (e) {
+  //     // Tangani kesalahan jika gagal menambah ulasan
+  //     Get.snackbar('Error', 'Gagal menambah ulasan: $e',
+  //         snackPosition: SnackPosition.BOTTOM);
+  //   }
+  // }
 
   ulasan() async{
     loading(true);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:nowlib_peminjam/themes.dart';
 
 import '../controllers/profile_controller.dart';
 
@@ -9,8 +10,11 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF373737),
       appBar: AppBar(
-        title: const Text('ProfileView'),
+        backgroundColor: Color(0xFF00A3FF),
+        foregroundColor: Colors.white,
+        title: Text('Profile', style: regularFont,),
         centerTitle: true,
         actions: [
           IconButton(
@@ -21,11 +25,8 @@ class ProfileView extends GetView<ProfileController> {
           ),
         ],
       ),
-      body: const Center(
-        child: Text(
-          'ProfileView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      body: SafeArea(
+        child: Text("Comingsoon..."),
       ),
     );
   }

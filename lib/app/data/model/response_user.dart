@@ -1,6 +1,3 @@
-/// message : "User found successfully"
-/// data : {"UserID":6,"Namalengkap":"Admin Perpus","Alamat":"SMK N 5 Surakarta","Email":"adminsmk5@email.com","Username":"Admin","Role":"admin"}
-
 class ResponseUser {
   ResponseUser({
       this.message, 
@@ -8,10 +5,10 @@ class ResponseUser {
 
   ResponseUser.fromJson(dynamic json) {
     message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? DataUser.fromJson(json['data']) : null;
   }
   String? message;
-  Data? data;
+  DataUser? data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -24,24 +21,19 @@ class ResponseUser {
 
 }
 
-/// UserID : 6
-/// Namalengkap : "Admin Perpus"
-/// Alamat : "SMK N 5 Surakarta"
-/// Email : "adminsmk5@email.com"
-/// Username : "Admin"
-/// Role : "admin"
-
-class Data {
-  Data({
+class DataUser {
+  DataUser({
       this.userID, 
+      this.profile, 
       this.namalengkap, 
       this.alamat, 
       this.email, 
       this.username, 
       this.role,});
 
-  Data.fromJson(dynamic json) {
+  DataUser.fromJson(dynamic json) {
     userID = json['UserID'];
+    profile = json['Profile'];
     namalengkap = json['Namalengkap'];
     alamat = json['Alamat'];
     email = json['Email'];
@@ -49,6 +41,7 @@ class Data {
     role = json['Role'];
   }
   int? userID;
+  String? profile;
   String? namalengkap;
   String? alamat;
   String? email;
@@ -58,6 +51,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['UserID'] = userID;
+    map['Profile'] = profile;
     map['Namalengkap'] = namalengkap;
     map['Alamat'] = alamat;
     map['Email'] = email;

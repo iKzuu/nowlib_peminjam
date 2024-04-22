@@ -8,7 +8,6 @@ import 'package:nowlib_peminjam/app/modules/konfirmasi/controllers/konfirmasi_co
 import 'package:nowlib_peminjam/app/modules/peminjaman/controllers/peminjaman_controller.dart';
 import 'package:nowlib_peminjam/app/modules/profile/controllers/profile_controller.dart';
 import 'package:nowlib_peminjam/app/modules/splashscreen/controllers/splashscreen_controller.dart';
-
 import '../controllers/dashboard_controller.dart';
 
 class DashboardBinding extends Bindings {
