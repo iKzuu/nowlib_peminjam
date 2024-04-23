@@ -57,7 +57,7 @@ class KoleksiView extends GetView<KoleksiController> {
                         height: 150,
                         child: FittedBox(
                           fit: BoxFit.fill,
-                          child: state[index].buku?.gambar?.isEmpty ?? true
+                          child: state[index].buku?.gambar == null
                               ? Text("No cover")
                               : Image(image: base64Image(state[index].buku!.gambar!)),
                         ),

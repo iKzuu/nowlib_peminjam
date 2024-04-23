@@ -60,7 +60,9 @@ class MeminjamnController extends GetxController with StateMixin<DataDetail>{
     change(null, status: RxStatus.loading());
     var idBuku = Get.parameters['id'];
     try {
-      final response = await ApiProvider.instance().get("${Endpoint.buku}?id=$idBuku");
+      final response = await ApiProvider.instance().get(Endpoint.buku,
+        queryParameters: {'id' : idBuku}
+      );
       if (response.statusCode == 200) {
         final ResponseDetail responseDetail = ResponseDetail.fromJson(response.data);
         if(responseDetail.data == null) {

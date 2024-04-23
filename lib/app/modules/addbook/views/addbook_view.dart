@@ -74,6 +74,14 @@ class AddbookView extends GetView<AddbookController> {
                 controller: controller.deskripsiController,
                 decoration: InputDecoration(labelText: 'Deskripsi Buku'),
               ),
+              TextField(
+                controller: controller.kategoriController,
+                decoration: InputDecoration(labelText: 'Kategori Buku'),
+              ),
+              TextField(
+                controller: controller.genreController,
+                decoration: InputDecoration(labelText: 'Genre Buku'),
+              ),
               // Display selected image path and size
               if (controller.imagePath.isNotEmpty)
                 Text('Image Path: ${controller.imagePath}'),

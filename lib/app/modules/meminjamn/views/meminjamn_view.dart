@@ -58,7 +58,7 @@ class MeminjamnView extends GetView<MeminjamnController> {
                                         height: 150,
                                         child: FittedBox(
                                           fit: BoxFit.fill,
-                                          child: state?.gambar?.isEmpty ?? true
+                                          child: state?.gambar == null
                                               ? Text("No cover")
                                               : Image(image: base64Image(state!.gambar!)),
                                         ),
@@ -94,14 +94,14 @@ class MeminjamnView extends GetView<MeminjamnController> {
                               ],
                             ),
 
-                            const SizedBox(height: 52),
+                            const SizedBox(height: 20),
 
                             Form(
                               key: controller.formKey,
                               child:
                               Column(
                                 children: [
-                                  const SizedBox(height: 60.0),
+                                  const SizedBox(height: 20.0),
                                   ConstrainedBox(
                                     constraints: BoxConstraints(maxWidth: 250.0),
                                     child: TextFormField(

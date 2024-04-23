@@ -149,27 +149,11 @@ class HomeView extends GetView<HomeController> {
                                   height: 150,
                                   child: FittedBox(
                                     fit: BoxFit.fill,
-                                    child: state?[index].buku?.gambar.isEmpty
-                                        ? Text("No cover")
+                                    child: state?[index].buku?.gambar == null
+                                        ? Text("No cover", style: regularFont4)
                                         : Image(image: base64Image(state?[index].buku?.gambar)),
                                   ),
                                 ),
-                                // child: state![index].buku?.gambar != null
-                                //     ? state[index]
-                                //             .buku
-                                //             ?.gambar
-                                //             .startsWith('http')
-                                //         ? Image.network(
-                                //             state[index].buku?.gambar ?? '',
-                                //             fit: BoxFit.cover,
-                                //           )
-                                //         : Image.memory(
-                                //             base64Image(
-                                //               state[index].buku?.gambar ?? '',
-                                //             ) as Uint8List,
-                                //             fit: BoxFit.cover,
-                                //           )
-                                //     : Text('No Cover'),
                                 SizedBox(height: 10),
                                 Flexible(
                                   child: AutoSizeText(
@@ -229,8 +213,8 @@ class HomeView extends GetView<HomeController> {
                                   height: 150,
                                   child: FittedBox(
                                     fit: BoxFit.fill,
-                                    child: state?[index].buku?.gambar.isEmpty
-                                        ? Text("No cover")
+                                    child: state?[index].buku?.gambar == null
+                                        ? Text("No cover", style: regularFont4,)
                                         : Image(image: base64Image(state?[index].buku?.gambar)),
                                   ),
                                 ),

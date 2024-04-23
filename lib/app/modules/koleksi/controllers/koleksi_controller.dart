@@ -74,15 +74,13 @@ class KoleksiController extends GetxController with StateMixin<List<DataCollecti
   getData() async {
     change(null, status: RxStatus.loading());
     try {
-      // final decodedToken = await JwtConverter.jwtDecode(token);
-      // final iduser = decodedToken["id"].toString();
       final response = await ApiProvider.instance().get(Endpoint.getkol,
-          queryParameters: {'userId': StorageProvider.read(StorageKey.idUser)});
-      if (response.statusCode == 201) {
+          queryParameters: {'userId' : StorageProvider.read(StorageKey.idUser)
+          });
+      if (response.statusCode == 201) { // Change status code to 200
         final ResponseCollection responseCollection =
-            ResponseCollection.fromJson(response.data);
-        if (responseCollection.data == null ||
-            responseCollection.data!.isEmpty) {
+        ResponseCollection.fromJson(response.data);
+        if (responseCollection.data!.isEmpty) {
           change(null, status: RxStatus.empty());
         } else {
           change(responseCollection.data, status: RxStatus.success());

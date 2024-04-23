@@ -44,9 +44,9 @@ class DetailBukuView extends GetView<DetailBukuController> {
                             height: 180,
                             child: FittedBox(
                               fit: BoxFit.fill,
-                              child: state!.gambar?.isEmpty ?? true
+                              child: state!.gambar == null
                                   ? Text("No cover")
-                                  : Image(image: base64Image(state!.gambar!)),
+                                  : Image(image: base64Image(state.gambar!)),
                             ),
                           )
                         ],

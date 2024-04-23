@@ -22,8 +22,9 @@ class AddbookController extends GetxController {
   final TextEditingController penerbitController = TextEditingController();
   final TextEditingController tahunTerbitController = TextEditingController();
   final TextEditingController jumlahhlmnController = TextEditingController();
-  // final TextEditingController gambarController = TextEditingController();
   final TextEditingController deskripsiController = TextEditingController();
+  final TextEditingController kategoriController = TextEditingController();
+  final TextEditingController genreController = TextEditingController();
   final HomeController homeController = Get.find();
 
   var imagePath = ''.obs;
@@ -141,6 +142,28 @@ class AddbookController extends GetxController {
           textColor: Colors.white,
           fontSize: 16.0);
       return;
+    } else if (kategoriController.text.isEmpty ||
+        kategoriController.text.trim() == "") {
+      Fluttertoast.showToast(
+          msg: "Kategori buku tidak boleh kosong",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      return;
+    } else if (genreController.text.isEmpty ||
+        genreController.text.trim() == "") {
+      Fluttertoast.showToast(
+          msg: "Genre buku tidak boleh kosong",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      return;
     }
     if (imagePath.value.isNotEmpty ||
         imagePath.value.trim() != "" ||
@@ -169,6 +192,8 @@ class AddbookController extends GetxController {
             "Gambar": coverPict,
             "Penerbit": tahunTerbitController.text.toString(),
             "Deskripsi": deskripsiController.text.toString(),
+            "NamaKategori": kategoriController.text.toString(),
+            "Namagenre": genreController.text.toString(),
           }));
 
       if (response.statusCode == 201) {
@@ -188,89 +213,6 @@ class AddbookController extends GetxController {
       log(e.toString());
     }
   }
-
-
-  // post() async {
-  //   loading(true);
-  //   try {
-  //     FocusScope.of(Get.context!).unfocus(); //ngeclose keyboard
-  //     formKey.currentState?.save();
-  //     if(formKey.currentState!.validate()) {
-  //       final response = await ApiProvider.instance().post(Endpoint.addbook,
-  //           data:
-  //           {
-  //             "Judul": judulController.text.toString(),
-  //             "Tahunterbit": tahunTerbitController.text.toString(),
-  //             "Penulis": penulisController.text.toString(),
-  //             "Jumlahhlmn": int.parse(jumlahhlmnController.text.toString()),
-  //             "Penerbit": penerbitController.text.toString(),
-  //             "Gambar" : gambarController.text.toString(),
-  //             "Deskripsi" : deskripsiController.text.toString(),
-  //           });
-  //       if (response.statusCode == 201) {
-  //         homeController.getData();
-  //         Get.back();
-  //       }else{
-  //         Get.snackbar("Sorry", "Login gagal", backgroundColor: Colors.orange);
-  //       }
-  //     }loading(false);
-  //   }on DioException catch (e){
-  //     loading(false);
-  //     if (e.response != null) {
-  //       if (e.response?.data != null) {
-  //         Get.snackbar("Sorry", "${e.response?.data['message']}", backgroundColor: Colors.orange);
-  //       }
-  //     }else{
-  //       Get.snackbar("Sorry", e.message ?? "", backgroundColor: Colors.red);
-  //     }
-  //   }catch (e) {loading(false);
-  //   Get.snackbar("Error", e.toString(), backgroundColor: Colors.red);
-  //   }
-  // }
-
-  // post() async {
-  //   loading(true);
-  //   try {
-  //     FocusScope.of(Get.context!).unfocus(); //ngeclose keyboard
-  //     formKey.currentState?.save();
-  //     if(formKey.currentState!.validate()) {
-  //       // Read the image file as bytes and encode it to base64
-  //       final bytes = await File(gambarController.text).readAsBytes();
-  //       final base64Image = 'data:image/${gambarController.text.split('.').last};base64,' + base64Encode(bytes);
-  //
-  //       final response = await ApiProvider.instance().post(Endpoint.addbook,
-  //           data:
-  //           {
-  //             "Judul": judulController.text.toString(),
-  //             "Tahunterbit": tahunTerbitController.text.toString(),
-  //             "Penulis": penulisController.text.toString(),
-  //             "Jumlahhlmn": int.parse(jumlahhlmnController.text.toString()),
-  //             "Penerbit": penerbitController.text.toString(),
-  //             "Gambar" : base64Image,
-  //             "Deskripsi" : deskripsiController.text.toString(),
-  //           });
-  //       if (response.statusCode == 201) {
-  //         homeController.getData();
-  //         Get.back();
-  //       } else {
-  //         Get.snackbar("Sorry", "Failed to add book", backgroundColor: Colors.orange);
-  //       }
-  //     }
-  //   } on DioError catch (e) {
-  //     if (e.response != null) {
-  //       if (e.response?.data != null) {
-  //         Get.snackbar("Sorry", "${e.response?.data['message']}", backgroundColor: Colors.orange);
-  //       }
-  //     } else {
-  //       Get.snackbar("Sorry", e.message ?? "", backgroundColor: Colors.red);
-  //     }
-  //   } catch (e) {
-  //     Get.snackbar("Error", e.toString(), backgroundColor: Colors.red);
-  //   } finally {
-  //     loading(false);
-  //   }
-  // }
-
 
   void increment() => count.value++;
 }
