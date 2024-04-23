@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -6,7 +7,10 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:nowlib_peminjam/app/data/model/response_book.dart';
+import 'package:nowlib_peminjam/app/data/model/response_relasi.dart';
 import 'package:nowlib_peminjam/app/modules/home/controllers/home_controller.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 import '../../../data/constant/endpoint.dart';
 import '../../../data/provider/api_provider.dart';
@@ -14,7 +18,7 @@ import '../../../data/provider/image_convert.dart';
 import '../../../data/provider/storage_provider.dart';
 import '../../../routes/app_pages.dart';
 
-class AddbookController extends GetxController {
+class AddbookController extends GetxController with StateMixin<List<DataRelasi>>{
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController judulController = TextEditingController();
@@ -37,6 +41,7 @@ class AddbookController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getData();
   }
 
   @override
@@ -47,6 +52,76 @@ class AddbookController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  delete(int? bookID) async {
+    try {
+      final response = await ApiProvider.instance().delete(Endpoint.buku,
+          queryParameters: {'id' : bookID}
+      );
+      QuickAlert.show(
+          context: Get.context!,
+          type: QuickAlertType.confirm,
+          title: 'Hapus Buku?',
+          confirmBtnText: 'Ya',
+          cancelBtnText: 'Tidak',
+          onConfirmBtnTap: () {
+            Get.back();
+            if (response.statusCode == 200) {
+              getData();
+              QuickAlert.show(
+                context: Get.context!,
+                type: QuickAlertType.success,
+                confirmBtnText: 'Ok',
+                title: 'Berhasil',
+                text: 'Berhasil Menghapus Koleksi',
+                titleColor: Colors.green,
+              );
+            } else {
+              QuickAlert.show(
+                context: Get.context!,
+                type: QuickAlertType.error,
+                confirmBtnText: 'Ok',
+                title: 'Gagal',
+                text: 'Gagal Menghapus Koleksi',
+                titleColor: Colors.red,
+              );
+            }
+          }
+      );
+    } catch (e) {
+      loading(false);
+      Get.snackbar("Error", e.toString(), backgroundColor: Colors.red);
+    }
+  }
+
+  Future<void> getData () async {
+    change(null, status: RxStatus.loading());
+    try {
+      final response = await ApiProvider.instance().get(Endpoint.relasi);
+      if (response.statusCode == 200) {
+        final ResponseRelasi responseRelasi = ResponseRelasi.fromJson(response.data);
+        if(responseRelasi.data!.isEmpty) {
+          change(null, status: RxStatus.empty());
+        }else{
+          change(responseRelasi.data, status: RxStatus.success());
+        }
+      }else{
+        change(null, status: RxStatus.error("gagal mengambil data"));
+      }
+
+    }on DioException catch (e){
+      if (e.response != null) {
+        if (e.response?.data != null) {
+          change(null, status: RxStatus.error("${e.response?.data['message']}"));
+        }
+      }else{
+        change(null, status: RxStatus.error(e.message ?? ""));
+
+      }
+    }catch (e) {
+      change(null, status: RxStatus.error(e.toString()));
+    }
   }
 
   Future<void> getImage() async {
@@ -198,6 +273,7 @@ class AddbookController extends GetxController {
 
       if (response.statusCode == 201) {
         loading(false);
+        getData();
         Fluttertoast.showToast(
             msg: "Berhasil menambahkan buku baru!",
             toastLength: Toast.LENGTH_SHORT,

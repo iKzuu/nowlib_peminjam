@@ -52,10 +52,6 @@ class DashboardView extends GetView<DashboardController> {
     if (controller.role == 'admin' || controller.role == 'petugas') {
       return [
         _bottomNavigationBarItem(icon: Icons.home_outlined, label: 'Admin'),
-        _bottomNavigationBarItem(
-            icon: Icons.collections_bookmark_outlined, label: 'Data'),
-        _bottomNavigationBarItem(
-            icon: Icons.check_circle_outline, label: 'Konfirmasi'),
         _bottomNavigationBarItem(icon: Icons.person_outlined, label: 'Profile'),
       ];
     } else {

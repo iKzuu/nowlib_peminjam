@@ -38,7 +38,6 @@ class HomeController extends GetxController with StateMixin<List<DataRelasi>> {
     searchController.dispose();
   }
 
-
   Future<void> getData () async {
     change(null, status: RxStatus.loading());
     try {

@@ -33,9 +33,7 @@ class DashboardController extends GetxController {
   ];
   final screenAdmin = const [
     AdminpageView(),
-    DataPeminjamanView(),
-    KonfirmasiView(),
-    AdminpageView(),
+    ProfileView(),
   ];
 
   void changeTabIndex(int index) {

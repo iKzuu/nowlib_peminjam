@@ -1,6 +1,8 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:nowlib_peminjam/themes.dart';
 
 import '../../../routes/app_pages.dart';
 import '../controllers/adminpage_controller.dart';
@@ -11,31 +13,75 @@ class AdminpageView extends GetView<AdminpageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AdminpageView'),
+        backgroundColor: Colors.lightBlue,
+        foregroundColor: Colors.white,
+        title: const Text('Dashboard'),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              controller.logout();
-            },
-          ),
-        ],
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-                onPressed: () {
-                  Get.toNamed(Routes.PROFILE);
-                },
-                child: Text("Profile")
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Card(
+                  color: Colors.greenAccent,
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    child: InkWell(
+                      onTap: () {
+                        Get.toNamed(Routes.ADDBOOK);
+                      },
+                      child: Container(
+                        child: Text(
+                          'Tambah Buku',
+                          style: regularFont.copyWith(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            ElevatedButton(
-              onPressed: () {
-                Get.toNamed(Routes.ADDBOOK);
-              },
-              child: Text("Tambah Buku"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Card(
+                  color: Colors.redAccent,
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    child: InkWell(
+                      onTap: () {
+                        Get.toNamed(Routes.ADDBOOK);
+                      },
+                      child: Container(
+                        child: Text(
+                          'User',
+                          style: regularFont.copyWith(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  color: Colors.blueAccent,
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    child: InkWell(
+                      onTap: () {
+                        Get.toNamed(Routes.DATA_PEMINJAMAN);
+                      },
+                      child: Container(
+                        child: AutoSizeText(
+                          'Peminjaman',
+                          style: regularFont.copyWith(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

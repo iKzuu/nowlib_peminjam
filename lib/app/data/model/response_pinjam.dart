@@ -1,13 +1,12 @@
-/// message : "Peminjaman found successfully"
-/// data : [{"PinjamID":6,"UserID":7,"BookID":19,"TglPeminjaman":"2024-03-01T00:00:00.000Z","TglPengembalian":"2024-03-06T00:00:00.000Z","Status":"dipinjam","Buku":{"BookID":19,"Judul":"Kokoro","Tahunterbit":"2024","Penulis":"Anang San","Jumlahhlmn":250,"Penerbit":"KZU Corp.","Deskripsi":" ","Gambar":null},"User":{"UserID":7,"Namalengkap":"Ega Naww","Alamat":"Sumber","Email":"eganw@email.com","Username":"Ega","Role":"pengguna"}},{"PinjamID":7,"UserID":7,"BookID":11,"TglPeminjaman":"2024-03-10T00:00:00.000Z","TglPengembalian":"2024-03-15T00:00:00.000Z","Status":"dipinjam","Buku":{"BookID":11,"Judul":"Kimetsu no Yaiba","Tahunterbit":"2016","Penulis":"Koyoharu Gotōge","Jumlahhlmn":23,"Penerbit":"Shueisha","Deskripsi":" ","Gambar":"https://upload.wikimedia.org/wikipedia/id/0/09/Demon_Slayer_-_Kimetsu_no_Yaiba%2C_volume_1.jpg"},"User":{"UserID":7,"Namalengkap":"Ega Naww","Alamat":"Sumber","Email":"eganw@email.com","Username":"Ega","Role":"pengguna"}},{"PinjamID":8,"UserID":7,"BookID":1,"TglPeminjaman":"2024-03-10T00:00:00.000Z","TglPengembalian":"2024-03-20T00:00:00.000Z","Status":"dipinjam","Buku":{"BookID":1,"Judul":"Pengembara Hitam","Tahunterbit":"2000","Penulis":"Mas Fuad","Jumlahhlmn":120,"Penerbit":"Ngawi SMP","Deskripsi":" ","Gambar":null},"User":{"UserID":7,"Namalengkap":"Ega Naww","Alamat":"Sumber","Email":"eganw@email.com","Username":"Ega","Role":"pengguna"}}]
-
 class ResponsePinjam {
   ResponsePinjam({
       this.message, 
+      this.total, 
       this.data,});
 
   ResponsePinjam.fromJson(dynamic json) {
     message = json['message'];
+    total = json['total'];
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
@@ -16,11 +15,13 @@ class ResponsePinjam {
     }
   }
   String? message;
+  int? total;
   List<DataPinjam>? data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['message'] = message;
+    map['total'] = total;
     if (data != null) {
       map['data'] = data?.map((v) => v.toJson()).toList();
     }
@@ -28,15 +29,6 @@ class ResponsePinjam {
   }
 
 }
-
-/// PinjamID : 6
-/// UserID : 7
-/// BookID : 19
-/// TglPeminjaman : "2024-03-01T00:00:00.000Z"
-/// TglPengembalian : "2024-03-06T00:00:00.000Z"
-/// Status : "dipinjam"
-/// Buku : {"BookID":19,"Judul":"Kokoro","Tahunterbit":"2024","Penulis":"Anang San","Jumlahhlmn":250,"Penerbit":"KZU Corp.","Deskripsi":" ","Gambar":null}
-/// User : {"UserID":7,"Namalengkap":"Ega Naww","Alamat":"Sumber","Email":"eganw@email.com","Username":"Ega","Role":"pengguna"}
 
 class DataPinjam {
   DataPinjam({
@@ -87,16 +79,8 @@ class DataPinjam {
 
 }
 
-/// UserID : 7
-/// Namalengkap : "Ega Naww"
-/// Alamat : "Sumber"
-/// Email : "eganw@email.com"
-/// Username : "Ega"
-/// Role : "pengguna"
-
 class User {
   User({
-      this.userID, 
       this.namalengkap, 
       this.alamat, 
       this.email, 
@@ -104,14 +88,12 @@ class User {
       this.role,});
 
   User.fromJson(dynamic json) {
-    userID = json['UserID'];
     namalengkap = json['Namalengkap'];
     alamat = json['Alamat'];
     email = json['Email'];
     username = json['Username'];
     role = json['Role'];
   }
-  int? userID;
   String? namalengkap;
   String? alamat;
   String? email;
@@ -120,7 +102,6 @@ class User {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['UserID'] = userID;
     map['Namalengkap'] = namalengkap;
     map['Alamat'] = alamat;
     map['Email'] = email;
@@ -130,15 +111,6 @@ class User {
   }
 
 }
-
-/// BookID : 19
-/// Judul : "Kokoro"
-/// Tahunterbit : "2024"
-/// Penulis : "Anang San"
-/// Jumlahhlmn : 250
-/// Penerbit : "KZU Corp."
-/// Deskripsi : " "
-/// Gambar : null
 
 class Buku {
   Buku({
@@ -168,7 +140,7 @@ class Buku {
   int? jumlahhlmn;
   String? penerbit;
   String? deskripsi;
-  dynamic gambar;
+  String? gambar;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
