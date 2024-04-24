@@ -43,7 +43,7 @@ class PeminjamanController extends GetxController with StateMixin<List<DataRiway
   getData() async {
     change(null, status: RxStatus.loading());
     try {
-      final response = await ApiProvider.instance().get(Endpoint.peminjaman,
+      final response = await ApiProvider.instance().get(Endpoint.pinjam,
           queryParameters: {'userId' : StorageProvider.read(StorageKey.idUser)
       });
       if (response.statusCode == 201) { // Change status code to 200
