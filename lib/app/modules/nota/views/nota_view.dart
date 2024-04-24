@@ -28,93 +28,98 @@ class NotaView extends GetView<NotaController> {
               SizedBox(height: 35),
               Image.asset(
                 'assets/nowlib.png',
-                width: 225.0,
-                height: 225.0,
+                width: 200.0,
+                height: 200.0,
               ),
               SizedBox(height: 20),
               Container(
-                width: 340,
-                height: 360,
+                width: 360,
+                height: 370,
                 decoration: BoxDecoration(
-                  color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Container(
-                  margin: EdgeInsets.only(top: 50, left: 20, right: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text('Judul : ', style: regularFont2),
-                          SizedBox(width: 115),
-                          // Flexible(
-                          //   child: AutoSizeText(
-                          //     'ini judul buku yang panjang',
-                          //     style: regularFont2,
-                          //   ),
-                          // ),
-                          Flexible(
-                            child: AutoSizeText(
-                              Get.parameters['Judul'] ?? '',
-                              style: regularFont2,
+                child: Card(
+                  child: Container(
+                    margin: EdgeInsets.only(top: 15.0, left: 20.0, right: 20.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('InvoiceID : ', style: regularFont2,),
+                            Flexible(
+                              child: AutoSizeText(
+                                Get.parameters['InvoiceID'] ?? '',
+                                style: regularFont2,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 30),
-                      Row(
-                        children: [
-                          Text('Nama Peminjam : ', style: regularFont2,),
-                          SizedBox(width: 35),
-                          // Flexible(
-                          //   child: AutoSizeText(
-                          //     'ini nama yang panjang',
-                          //     style: regularFont2,
-                          //   ),
-                          // ),
-                          Flexible(
-                            child: AutoSizeText(
-                              Get.parameters['Namalengkap'] ?? '',
-                              style: regularFont2,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 30),
-                      Row(
-                        children: [
-                          Text('Tanggal Pinjam : ', style: regularFont2,),
-                          SizedBox(width: 42),
-                          // Text('2024-03-02', style: regularFont2,),
-                          Flexible(
-                            child: AutoSizeText(
-                              Get.parameters['TglPeminjaman'] ?? '',
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 30),
-                      Row(
-                        children: [
-                          Text('Tanggal Kembali : ', style: regularFont2,),
-                          SizedBox(width: 32),
-                          // Text('2024-03-20', style: regularFont2,),
-                          Flexible(
-                            child: AutoSizeText(
-                              Get.parameters['TglPengembalian'] ?? '',
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 50),
-                      Flexible(
-                        child: AutoSizeText(
-                          '*tunjukkan invoice pada petugas perpustakaan saat pengambilan buku',
-                          style: regularFont4.copyWith(color: Colors.grey),
+                          ],
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Judul : ', style: regularFont2),
+                            Flexible(
+                              child: AutoSizeText(
+                                Get.parameters['Judul'] ?? '',
+                                style: regularFont2,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Nama Peminjam : ', style: regularFont2,),
+                            Flexible(
+                              child: AutoSizeText(
+                                Get.parameters['Namalengkap'] ?? '',
+                                style: regularFont2,
+                                maxLines: 1,
+                                overflow: TextOverflow.fade,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Tanggal Pinjam : ', style: regularFont2,),
+                            // Text('2024-03-02', style: regularFont2,),
+                            Flexible(
+                              child: AutoSizeText(
+                                Get.parameters['TglPeminjaman'] ?? '',
+                                style: regularFont2,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Tanggal Kembali : ', style: regularFont2,),
+                            // Text('2024-03-20', style: regularFont2,),
+                            Flexible(
+                              child: AutoSizeText(
+                                Get.parameters['TglPengembalian'] ?? '',
+                                style: regularFont2,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 50),
+                        Flexible(
+                          child: AutoSizeText(
+                            '*tunjukkan invoice pada petugas perpustakaan saat pengambilan buku',
+                            style: regularFont4.copyWith(color: Colors.grey),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -19,6 +19,7 @@ abstract class Routes {
   static const ADDBOOK = _Paths.ADDBOOK;
   static const KONFIRMASI = _Paths.KONFIRMASI;
   static const DATA_PEMINJAMAN = _Paths.DATA_PEMINJAMAN;
+  static const NOTA_RIWAYAT = _Paths.NOTA_RIWAYAT;
 }
 
 abstract class _Paths {
@@ -39,4 +40,5 @@ abstract class _Paths {
   static const ADDBOOK = '/addbook';
   static const KONFIRMASI = '/konfirmasi';
   static const DATA_PEMINJAMAN = '/data-peminjaman';
+  static const NOTA_RIWAYAT = '/nota-riwayat';
 }

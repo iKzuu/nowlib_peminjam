@@ -22,6 +22,8 @@ import '../modules/meminjamn/bindings/meminjamn_binding.dart';
 import '../modules/meminjamn/views/meminjamn_view.dart';
 import '../modules/nota/bindings/nota_binding.dart';
 import '../modules/nota/views/nota_view.dart';
+import '../modules/nota_riwayat/bindings/nota_riwayat_binding.dart';
+import '../modules/nota_riwayat/views/nota_riwayat_view.dart';
 import '../modules/peminjaman/bindings/peminjaman_binding.dart';
 import '../modules/peminjaman/views/peminjaman_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
@@ -113,6 +115,11 @@ class AppPages {
       name: _Paths.DATA_PEMINJAMAN,
       page: () => const DataPeminjamanView(),
       binding: DataPeminjamanBinding(),
+    ),
+    GetPage(
+      name: _Paths.NOTA_RIWAYAT,
+      page: () => const NotaRiwayatView(),
+      binding: NotaRiwayatBinding(),
     ),
   ];
 }

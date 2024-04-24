@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
@@ -21,6 +22,7 @@ class MeminjamnController extends GetxController with StateMixin<DataDetail>{
   // final TextEditingController tglPinjamController = TextEditingController();
   final TextEditingController tglKembaliController = TextEditingController();
   // DateTime? selectedDate;
+  final dataPinjam = Rx<DataPeminjaman>(DataPeminjaman());
 
   final count = 0.obs;
 
@@ -94,7 +96,6 @@ class MeminjamnController extends GetxController with StateMixin<DataDetail>{
       FocusScope.of(Get.context!).unfocus(); //ngeclose keyboard
       formKey.currentState?.save();
       if(formKey.currentState!.validate()) {
-        // final tglPinjam = tglPinjamController.text;
         final tglKembali = tglKembaliController.text;
 
         final response = await ApiProvider.instance().post(Endpoint.peminjaman,
@@ -102,11 +103,14 @@ class MeminjamnController extends GetxController with StateMixin<DataDetail>{
             {
               "UserID": int.parse(StorageProvider.read(StorageKey.idUser)),
               "BookID": int.parse(Get.parameters['id'].toString()),
-              // "TglPeminjaman": tglPinjam,
               "TglPengembalian": tglKembali,
             });
         if (response.statusCode == 201) {
           String formattedTglPeminjaman = DateFormat('yyyy-MM-dd').format(DateTime.now());
+          String invoiceId = response.data['data']['InvoiceID']; // Mengambil InvoiceID dari respons API
+          dataPinjam.update((val) {
+            val?.invoiceID = invoiceId; // Memperbarui InvoiceID dalam dataPinjam
+          });
           QuickAlert.show(
             context: Get.context!,
             type: QuickAlertType.success,
@@ -117,6 +121,7 @@ class MeminjamnController extends GetxController with StateMixin<DataDetail>{
             onConfirmBtnTap: () {
               Get.offAllNamed(Routes.NOTA,
                   parameters: {
+                    'InvoiceID': invoiceId,
                     'Judul': Get.parameters['judul'] ?? '',
                     'Namalengkap' : StorageProvider.read(StorageKey.namalengkap),
                     'TglPeminjaman': formattedTglPeminjaman,

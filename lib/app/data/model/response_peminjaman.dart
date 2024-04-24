@@ -1,6 +1,3 @@
-/// message : "Peminjaman found successfully"
-/// data : {"PinjamID":2,"UserID":4,"BookID":11,"TglPeminjaman":"2024-02-26","TglPengembalian":"2024-02-27","Status":"dipinjam","Buku":{"BookID":11,"Judul":"Kimetsu no Yaiba","Tahunterbit":"2016","Penulis":"Koyoharu Gotōge","Jumlahhlmn":23,"Penerbit":"Shueisha","Deskripsi":" ","Gambar":"https://upload.wikimedia.org/wikipedia/id/0/09/Demon_Slayer_-_Kimetsu_no_Yaiba%2C_volume_1.jpg"},"User":{"Namalengkap":"Amba Lele"}}
-
 class ResponsePeminjaman {
   ResponsePeminjaman({
       this.message, 
@@ -24,18 +21,10 @@ class ResponsePeminjaman {
 
 }
 
-/// PinjamID : 2
-/// UserID : 4
-/// BookID : 11
-/// TglPeminjaman : "2024-02-26"
-/// TglPengembalian : "2024-02-27"
-/// Status : "dipinjam"
-/// Buku : {"BookID":11,"Judul":"Kimetsu no Yaiba","Tahunterbit":"2016","Penulis":"Koyoharu Gotōge","Jumlahhlmn":23,"Penerbit":"Shueisha","Deskripsi":" ","Gambar":"https://upload.wikimedia.org/wikipedia/id/0/09/Demon_Slayer_-_Kimetsu_no_Yaiba%2C_volume_1.jpg"}
-/// User : {"Namalengkap":"Amba Lele"}
-
 class DataPeminjaman {
   DataPeminjaman({
       this.pinjamID, 
+      this.invoiceID, 
       this.userID, 
       this.bookID, 
       this.tglPeminjaman, 
@@ -46,6 +35,7 @@ class DataPeminjaman {
 
   DataPeminjaman.fromJson(dynamic json) {
     pinjamID = json['PinjamID'];
+    invoiceID = json['InvoiceID'];
     userID = json['UserID'];
     bookID = json['BookID'];
     tglPeminjaman = json['TglPeminjaman'];
@@ -55,6 +45,7 @@ class DataPeminjaman {
     user = json['User'] != null ? User.fromJson(json['User']) : null;
   }
   int? pinjamID;
+  String? invoiceID;
   int? userID;
   int? bookID;
   String? tglPeminjaman;
@@ -66,6 +57,7 @@ class DataPeminjaman {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['PinjamID'] = pinjamID;
+    map['InvoiceID'] = invoiceID;
     map['UserID'] = userID;
     map['BookID'] = bookID;
     map['TglPeminjaman'] = tglPeminjaman;
@@ -82,33 +74,38 @@ class DataPeminjaman {
 
 }
 
-/// Namalengkap : "Amba Lele"
-
 class User {
   User({
-      this.namalengkap,});
+      this.namalengkap, 
+      this.username, 
+      this.alamat, 
+      this.email, 
+      this.role,});
 
   User.fromJson(dynamic json) {
     namalengkap = json['Namalengkap'];
+    username = json['Username'];
+    alamat = json['Alamat'];
+    email = json['Email'];
+    role = json['Role'];
   }
   String? namalengkap;
+  String? username;
+  String? alamat;
+  String? email;
+  String? role;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['Namalengkap'] = namalengkap;
+    map['Username'] = username;
+    map['Alamat'] = alamat;
+    map['Email'] = email;
+    map['Role'] = role;
     return map;
   }
 
 }
-
-/// BookID : 11
-/// Judul : "Kimetsu no Yaiba"
-/// Tahunterbit : "2016"
-/// Penulis : "Koyoharu Gotōge"
-/// Jumlahhlmn : 23
-/// Penerbit : "Shueisha"
-/// Deskripsi : " "
-/// Gambar : "https://upload.wikimedia.org/wikipedia/id/0/09/Demon_Slayer_-_Kimetsu_no_Yaiba%2C_volume_1.jpg"
 
 class Buku {
   Buku({

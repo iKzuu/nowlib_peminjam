@@ -104,6 +104,8 @@ class DetailBukuController extends GetxController with StateMixin<DataBook>{
   post(int id) async {
     loading(true);
     try {
+      formKey.currentState?.save();
+      if (formKey.currentState!.validate()) {
         int? userId = int.tryParse(StorageProvider.read(StorageKey.idUser) ?? "");
 
         final response = await ApiProvider.instance().post(Endpoint.addkol,
@@ -117,6 +119,7 @@ class DetailBukuController extends GetxController with StateMixin<DataBook>{
         } else {
           Get.snackbar("Sorry", "Gagal menambah koleksi", backgroundColor: Colors.orange);
         }
+      }
     } on DioException catch (e){
       loading(false);
       if (e.response != null) {

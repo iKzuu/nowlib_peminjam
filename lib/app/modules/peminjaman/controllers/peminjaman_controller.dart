@@ -10,7 +10,6 @@ import '../../../data/provider/api_provider.dart';
 import '../../../data/provider/storage_provider.dart';
 
 class PeminjamanController extends GetxController with StateMixin<List<DataRiwayat>>{
-  // int selectedIndex = 2;
 
   final count = 0.obs;
   @override

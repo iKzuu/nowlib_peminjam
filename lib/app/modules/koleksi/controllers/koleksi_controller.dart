@@ -15,7 +15,6 @@ import '../../../data/provider/jwt_convert.dart';
 import '../../../data/provider/storage_provider.dart';
 
 class KoleksiController extends GetxController with StateMixin<List<DataCollection>> {
-  // final token = StorageProvider.read(StorageKey.token);
   final loading = false.obs;
   final count = 0.obs;
 

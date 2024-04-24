@@ -23,10 +23,12 @@ dependencies:
   open_file: ^3.3.2
   file_picker: ^8.0.1
   fluttertoast: ^8.2.5
+  pdf: ^3.10.8
   flutter: 
     sdk: flutter
   google_fonts: ^6.2.1
   jwt_decoder: ^2.0.1
+  path_provider: ^2.0.2
 
 flutter_native_splash:
   android: true
@@ -41,7 +43,11 @@ dev_dependencies:
   flutter_test: 
     sdk: flutter
 
-flutter: 
+flutter:
+  fonts:
+    - family: CustomFont
+      fonts:
+        - asset: "assets/font/nota.ttf"
   uses-material-design: true
   assets:
     - assets/
